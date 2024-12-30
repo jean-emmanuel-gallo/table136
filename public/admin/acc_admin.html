@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Gestion Session Planning</title>
+        <link rel="icon" type="image/x-icon" href="favicon.png">
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!-- jQuery UI -->
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <!-- Bootstrap JS et dépendances -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <!-- Ajouter jsPDF et le plugin autoTable -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+        <!-- Additional CSS -->
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        header {
+            background-color: #ec5b15;
+        }
+
+        #logo_brand {
+            height: 66px;
+            width: auto;
+        }
+
+        #navlist {
+            list-style: none;
+            display: flex;
+            margin-top: 1%;
+            margin-left: 1%;
+        }
+
+        /* Style pour la notification en bas à droite */
+        .admin-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #ec5b15;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: #ff7e3e;
+            z-index: 9999;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+
+        /* Style temporaire pour surbrillance de l'événement */
+        .highlight {
+            background-color: yellow;
+            transition: background-color 0.5s ease;
+        }
+
+
+
+        #navlist li a {
+            color: white;
+        }
+
+        /* Ajout du style pour les notifications */
+        .notification-bell {
+            position: relative;
+        }
+
+
+        .btn-warning {
+          background-color: #EC5B15;
+          color: white;
+          display: block !important;
+          height: 60px;
+          width: 155px;
+        }
+
+        .btn-warning:hover {
+          background-color: #EC5B15;
+          color: white;
+          display: block !important;
+          height: 60px;
+          width: 155px;
+        }
+
+        .btn-warning:active {
+          background-color: #EC5B15 !important; 
+          color: white !important;
+          display: block !important;
+          height: 60px;
+          width: 155px;
+        }
+
+
+        .modal-content {
+            position: relative;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            width: 100%;
+            pointer-events: auto;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid rgba(0, 0, 0, .2);
+            border-radius: .3rem;
+            outline: 0;
+            width: 540px;
+        }
+
+        .notification-bell {
+            display: none;
+        }
+
+        .notification-bell .badge {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background-color: red;
+            color: white;
+        }
+
+        
+
+        .dropdown-menu-notifications {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        #formateurs-list-container {
+            margin-bottom: 20px;
+            float: right;
+            width: 200px;
+        }
+
+        .formateur-item {
+            background-color: #EC5B15;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 5px;
+            list-style-type: none;
+            text-align: center;
+        }
+
+        .add-formateur-btn {
+            background-color: #ddd;
+            color: black;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        #add-event-btn:hover {
+            color: #fff;
+            background-color: #c14a0f;
+            border-color: #c14a0f;
+        }
+
+        .formateur-cell {
+            min-height: 50px; /* Hauteur minimale pour les cellules de formateurs */
+        }
+
+        .month-btn {
+            background-color: grey;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .month-btn.has-events {
+            background-color: #EC5B15;
+        }
+
+        .alert-container {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid red;
+            background-color: pink;
+            color: red;
+            cursor: pointer;
+            animation: blinker 1s linear infinite;
+        }
+
+        #btn_request {
+            margin-right: -41px;
+            display: flex;
+        }
+
+
+        #cancel-requests-btn {
+            background-color: #EC5B15;
+            color: white;
+            display: block !important;
+            height: 60px;
+            width: 155px;
+        }
+
+        .form-control {
+    /* width: calc(20% - 10px); */
+    margin-right: 10px;
+    width: 379px;
+    display: table-row;
+}
+
+.custom-alert {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(236, 91, 21, 0.65); /* #ec5b15 avec opacité de 65% */
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    width: 300px;
+    text-align: center;
+}
+
+.custom-alert-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.custom-alert-content p {
+    margin: 0 0 15px;
+}
+
+.btn-close {
+    background-color: #ffffff;
+    color: #ec5b15;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-close:hover {
+    background-color: #f0f0f0;
+}
+
+
+        #unassigned-events-btn {
+            background-color: #EC5B15;
+            color: white;
+            display: block !important;
+            height: 60px;
+            width: 155px;
+        }
+
+        .col {
+            flex-basis: 0;
+            display: flex;
+            place-content: center;
+            gap: 31px;
+        }
+
+        #add-event-btn {
+            background-color: #ec5b15; color: white; padding: 10px 20px; border: none; border-radius: 50px; margin-left: 55px;
+        }
+
+        #add-event-btn:focus, #add-event-btn:active {
+            outline: none;
+            box-shadow: 0 0 5px #ec5b15; /* Ajoute une légère ombre de la couleur de ton choix */
+            background-color: #c14a0f;
+        }
+
+        .modal-backdrop + .modal {
+            z-index: 1051 !important; /* Z-index supérieur au backdrop du premier modal */
+        }
+
+        #nonAssignedFormateursModal .modal-body {
+    max-height: 400px; /* Limite la hauteur à 400px */
+    overflow-y: auto; /* Ajoute le défilement vertical */
+    padding: 15px; /* Ajoute un peu d'espace pour le contenu */
+}
+
+
+    @media print {
+        .add-formateur-btn {
+            display: none !important; /* Cacher le bouton lors de l'impression */
+        }
+    }
+
+
+        .w-100 {
+            width: 197.3px !important;
+        }
+
+        .w-100:focus, .w-100:active {
+            outline: none;
+            box-shadow: 0 0 5px #ec5b15; /* Ajoute une légère ombre de la couleur de ton choix */
+            background-color: #c14a0f;
+        }
+
+        #non-assigned-formateurs-list {
+    max-height: 300px;
+    overflow-y: scroll; /* Utiliser 'scroll' pour forcer l'affichage de la scrollbar */
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ec5b15;
+}
+
+
+/* Scrollbar pour les navigateurs WebKit (Chrome, Safari) */
+#non-assigned-formateurs-list::-webkit-scrollbar {
+    width: 10px;
+}
+
+#non-assigned-formateurs-list::-webkit-scrollbar-track {
+    background: #f0f0f0;
+}
+
+#non-assigned-formateurs-list::-webkit-scrollbar-thumb {
+    background-color: #ec5b15;
+    border-radius: 5px;
+}
+
+#non-assigned-formateurs-list::-webkit-scrollbar-thumb:hover {
+    background-color: #c14a0f;
+}
+
+/* Styles pour la scrollbar personnalisée */
+.scrollbar {
+    overflow-y: auto; /* Active le défilement vertical */
+    max-height: 300px; /* Hauteur maximale pour le modal */
+}
+
+/* Pour les navigateurs Webkit (Chrome, Safari) */
+.scrollbar::-webkit-scrollbar {
+    width: 10px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    background-color: #ec5b15; /* Couleur de la scrollbar */
+    border-radius: 5px; /* Coins arrondis */
+}
+
+/* Pour Firefox */
+.scrollbar {
+    scrollbar-width: thin; /* Longueur de la scrollbar */
+    scrollbar-color: #ec5b15 transparent; /* Couleur de la scrollbar */
+}
+
+#formateurs-list-checkboxes {
+    max-height: 300px; /* Limitez la hauteur maximale selon vos besoins */
+    overflow-y: auto; /* Ajoute une barre de défilement verticale */
+    background-color: white; /* Assurez-vous que le fond est blanc pour une meilleure lisibilité */
+}
+
+
+/* Pour Firefox */
+#non-assigned-formateurs-list {
+    scrollbar-width: thin;
+    scrollbar-color: #ec5b15 #f0f0f0;
+}
+
+
+        .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+            color: #fff;
+            background-color: #c14a0f;
+            border-color: #c14a0f;
+        }
+
+
+        .btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show>.btn-primary.dropdown-toggle:focus {
+    box-shadow: none;
+}
+
+
+
+
+        @keyframes blinker {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        #months-container {
+            margin-left: 68px;
+        }
+
+        .form-check-input:disabled~.form-check-label {
+            color: #6c757d;
+            display: none;
+        }
+
+        /* Bouton pour afficher la carte */
+        .map-btn {
+            background-color: #ec5b15;
+            border: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+        }
+
+        .map-btn img {
+            width: 30px;
+            height: 30px;
+        }
+
+        /* Styles pour le modal de la carte */
+        .map-modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+        }
+
+        .map-content-container {
+            margin: auto;
+            display: block;
+            width: 80%;
+            height: 80%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .map-content {
+            width: 100%;
+            height: auto;
+            transition: transform 0.25s ease;
+            cursor: zoom-in;
+        }
+
+        .map-content.zoomed {
+            cursor: zoom-out;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #ec5b15;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            z-index: 1002;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .pending-cancel {
+    background-color: orange !important;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <img id="logo_brand" src="logo_orion-web_white.png" alt="">
+            <ul id="navlist">
+                <li><a href="acc_admin.html">Gestion Session</a></li>
+                <li><a href="t_archive.html">Formations archivées</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Formateurs <span id="formateurs-badge" class="badge badge-warning" style="display: none;">0</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="logforma.html">Logs des formateurs</a>
+                        <a class="dropdown-item" href="addformateur/addform.html">
+                            Ajout formateur <span id="ajout-formateur-badge" class="badge badge-warning" style="display: none;">0</span>
+                        </a>
+                        <a class="dropdown-item" href="forgot_password.html">Mots de passe oubliés</a>
+                    </div>
+                </li>
+                
+                
+                
+                
+                <li><a href="themeformateurs/themeforma.html">Thèmes et assignations</a></li>
+                <li><a href="logadmin.html">Logs de Véronique</a></li>
+                <li><a href="#" id="logout-btn">Déconnexion</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section id="monTableau">
+        <div class="row">
+            <div class="col">
+                <div class="card card-body mt-4">
+                    <h5>Recherche avancée combinée</h5>
+
+                    
+                    <div class="row">
+                        <!-- Filtrer par Thème -->
+                        <div class="col-md-6">
+                            <label style="display: none;" for="filter-theme">Thème</label>
+                            <input id="filter-theme" class="form-control" type="text" placeholder="Rechercher par Thème">
+                        </div>
+                
+                        <!-- Filtrer par Formateur -->
+                        <div class="col-md-6">
+                            <label style="display: none;" for="filter-formateur">Formateur</label>
+                            <input id="filter-formateur" class="form-control" type="text" placeholder="Rechercher par Formateur">
+                        </div>
+                    </div>
+                
+                    <div class="row mt-3">
+                        <!-- Filtrer par Ville -->
+                        <div class="col-md-6">
+                            <label style="display: none;" for="filter-ville">Ville</label>
+                            <input id="filter-ville" class="form-control" type="text" placeholder="Rechercher par Ville">
+                        </div>
+                
+                        <!-- Filtrer par Méthode -->
+                        <div class="col-md-6">
+                            <label style="display: none;" for="filter-methode">Méthode</label>
+                            <select id="filter-methode" class="form-control">
+                                <option value="">Méthode</option>
+                                <option value="présentiel">Présentiel</option>
+                                <option value="classe virtuelle">Classe virtuelle</option>
+                                <option value="soirée">Soirée</option>
+                            </select>
+                        </div>
+                    </div>
+                
+                    <div class="row mt-3">
+                        <!-- Filtrer par Date de début -->
+                        <div class="col-md-6">
+                            <label style="display: none;" for="filter-date-debut">Date de Début</label>
+                            <input id="filter-date-debut" class="form-control datepicker" type="text" placeholder="dd/mm/yyyy">
+                        </div>
+                
+                        <!-- Filtrer par Date de fin -->
+                        <div class="col-md-6">
+                            <label style="display: none;" for="filter-date-fin">Date de Fin</label>
+                            <input id="filter-date-fin" class="form-control datepicker" type="text" placeholder="dd/mm/yyyy">
+                        </div>
+                    </div>
+                
+                    <div class="row mt-3">
+                        <!-- Filtrer par Numéro de session -->
+                        <div class="col-md-6">
+                            <label style="display: none;" for="filter-num-session">Numéro de Session</label>
+                            <input id="filter-num-session" class="form-control" type="text" placeholder="Rechercher par Numéro de Session">
+                        </div>
+                
+                        <!-- Filtrer par Choix (Accepté, Refusé, En Attente) -->
+                        <div class="col-md-6">
+                            <label style="display: none;" for="filter-choix">Choix</label>
+                            <select id="filter-choix" class="form-control">
+                                <option value="">Tous</option>
+                                <option value="accepté">Accepté</option>
+                                <option value="refusé">Refusé</option>
+                                <option value="en attente">En Attente</option>
+                            </select>
+                        </div>
+                    </div>
+                
+                    <div class="row mt-4">
+                        <div class="col">
+                            <button id="apply-advanced-filters" class="btn btn-primary w-100">Appliquer les filtres</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEventModal">
+    Ajouter un événement
+</button>
+<!-- Ajouter un bouton pour éditer en PDF -->
+<button id="print-events-btn" class="btn btn-primary">
+    <i class="fas fa-print"></i> Éditer en PDF
+</button>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div id="custom-alert" class="custom-alert" style="display: none;">
+                    <div class="custom-alert-content">
+                        <p id="custom-alert-message"></p>
+                        <button id="custom-alert-close" class="btn-close">Fermer</button>
+                    </div>
+                </div>
+                
+
+                
+                
+        </div>
+        <div id="timenav">
+            <div class="year-navigation">
+                <button id="prev-year-btn" class="btn btn-secondary"><</button>
+                <span id="current-year"></span>
+                <button id="next-year-btn" class="btn btn-secondary">></button>
+            </div>
+            <div id="months-container">
+                <!-- Les boutons de mois seront ajoutés dynamiquement ici -->
+            </div>
+            <div id="btn_request">
+                <button id="unassigned-events-btn" class="btn btn-warning" style="display:none;">0 formations sans formateurs</button>
+                <button id="cancel-requests-btn" class="btn btn-danger" style="display:none;">0 demandes d'annulation</button>
+                <button id="refused-events-btn" class="btn btn-warning" style="display:none;">0 formations refusées</button>
+                <button id="refresh-btn" style="display: none;">Rafraîchir</button>                
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col">
+                <h5>Filtres de colonnes</h5>
+                <div>
+                    <input type="checkbox" id="filter-session" checked>
+                    <label for="filter-session">Session</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="filter-constel" checked>
+                    <label for="filter-constel">Constel/DPC</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="filter-remarque" checked>
+                    <label for="filter-remarque">Remarque</label>
+                </div>
+            </div>
+        </div>
+        
+        <table class="table table-striped">
+            <thead>
+                <tr class="bg-info">
+                    <th class="bg-info" data-colname="theme" data-order="desc">Thème(s) &#9650</th>
+                    <th data-colname="date_debut" data-order="desc">Début &#9650</th>
+                    <th data-colname="date_fin" data-order="desc">Fin &#9650</th>
+                    <th data-colname="ville" data-order="desc">Ville &#9650</th>
+                    <th data-colname="finan" data-order="desc">Financement &#9650</th>
+                    <th data-colname="methode" data-order="desc">Méthode &#9650</th>
+                    <th data-colname="remarque" data-order="desc">Remarque &#9650</th>
+                    <th data-colname="forma" data-order="desc">Formateur &#9650</th>
+                    <th data-colname="choix" data-order="desc">Choix &#9650</th>
+                    <th data-colname="num_s" data-order="desc">Session &#9650</th>
+                    <th data-colname="constel" data-order="desc">Constel &#9650</th>
+                    <th data-colname="dpc" data-order="desc">DPC &#9650</th>
+                </tr>
+            </thead>
+            <tbody id="myTable">
+            </tbody>
+        </table>
+        
+        
+    </section>
+
+<!-- Modal pour ajouter un nouvel évènement -->
+<div class="modal fade" id="addEventModal" tabindex="-1" role="dialog" aria-labelledby="addEventModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addEventModalLabel">Ajouter un nouveau thème</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="add-theme-form">
+                    <div class="form-group">
+                        <label for="new-theme">Thème</label>
+                        <input id="new-theme" class="form-control" type="text" required list="themes-list">
+                        <datalist id="themes-list">
+                            <!-- Les options seront ajoutées par JavaScript -->
+                        </datalist>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-finan">Financement</label>
+                        <input id="new-finan" class="form-control" type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-date-debut">Date Début</label>
+                        <input id="new-date-debut" class="form-control datepicker" type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-date-fin">Date Fin</label>
+                        <input id="new-date-fin" class="form-control datepicker" type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-ville">Ville</label>
+                        <input id="new-ville" class="form-control" type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-methode">Méthode</label>
+                        <select id="new-methode" class="form-control" required>
+                            <option value="présentiel">Présentiel</option>
+                            <option value="classe virtuelle">Classe virtuelle</option>
+                            <option value="soirée">Soirée</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-remarque">Remarque</label>
+                        <textarea class="form-control" id="new-remarque" rows="3"></textarea>
+                    </div>
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-success">Ajouter</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="secondary-theme">Thème secondaire</label>
+                        <input id="secondary-theme" class="form-control" type="text" list="themes-list">
+                    </div>                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal pour gérer les événements -->
+<div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="min-height: 800px;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eventModalLabel">Modifier l'Événement</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form id="edit-event-form" novalidate>
+                    <div class="form-group">
+                        <label for="edit-theme">Thème</label>
+                        <input type="text" class="form-control" id="edit-theme" name="theme" aria-describedby="themeHelp">
+                        <small id="themeHelp" class="form-text text-muted">Nom du thème associé à l'événement.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-date-debut">Date Début</label>
+                        <input type="text" class="form-control datepicker" id="edit-date-debut" name="date_debut">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-date-fin">Date Fin</label>
+                        <input type="text" class="form-control datepicker" id="edit-date-fin" name="date_fin">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-ville">Ville</label>
+                        <input type="text" class="form-control" id="edit-ville" name="ville">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-choix">Choix</label>
+                        <select class="form-control" id="edit-choix" name="choix" aria-describedby="choixHelp">
+                            <option value="accepté">Accepté</option>
+                            <option value="refusé">Refusé</option>
+                        </select>
+                        <small id="choixHelp" class="form-text text-muted">Statut de l'événement (accepté ou refusé).</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-methode">Méthode</label>
+                        <input type="text" class="form-control" id="edit-methode" name="methode">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-remarque">Remarque</label>
+                        <input type="text" class="form-control" id="edit-remarque" name="remarque">
+                    </div>
+                    <input type="hidden" id="edit-event-id" name="event_id">
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close-event-modal">Fermer</button>
+                <button type="button" class="btn btn-danger" id="delete-event-btn">Supprimer</button>
+                <button type="button" class="btn btn-primary" id="save-event-btn">Sauvegarder</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <div class="modal fade" id="selectFormateursModal" tabindex="-1" role="dialog" aria-labelledby="selectFormateursLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="selectFormateursLabel">Sélectionner des formateurs</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="formateurs-list-checkboxes">
+                        <!-- Les cases à cocher des formateurs vont ici -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button type="button" class="btn btn-primary" id="confirm-selection">Confirmer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Modal pour ajouter un formateur non assigné -->
+    <div class="modal fade" id="addFormateurModal" tabindex="-1" role="dialog" aria-labelledby="addFormateurModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addFormateurModalLabel">Ajouter un formateur non assigné</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="add-formateur-form">
+                        <div class="form-group">
+                            <label for="non-assigned-formateurs-list">Formateurs disponibles :</label>
+                            <div id="non-assigned-formateurs-list" class="form-control" style="height: 300px; overflow-y: auto;">
+                                <!-- Liste des formateurs non assignés sera peuplée ici -->
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Ajouter Formateur</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+    <div id="notificationsModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Notifications</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul id="notifications-list" class="list-group">
+                        <!-- Les notifications seront insérées ici -->
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+
+
+    <div id="assign-formateurs-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modal-formateurs"></div>
+            <button onclick="assignFormateurs()">Ajouter Formateurs</button>
+        </div>
+    </div>
+
+    <!-- Bouton pour afficher la carte -->
+    <button id="show-map-btn" class="map-btn">
+        <img src="bmap.svg" alt="Carte" />
+    </button>
+
+<!-- Bouton pour afficher la carte -->
+<button id="show-map-btn" class="map-btn" onclick="location.href='scarte.html';">
+    <img src="bmap.svg" alt="Carte" />
+</button>
+
+
+<div id="popup-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999;"></div>
+
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="notifcation_admin.js"></script>
+    <script type="module" src="scarte.js"></script>
+    <script type="module" src="./gestevent.js"></script>
+    <script type="module" src="./tablesort.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+// Initialisation de Socket.IO
+const socket = io();
+
+// Fonction pour afficher le pop-up
+function showPopup(message, link) {
+    const popup = document.createElement('div');
+    popup.style.backgroundColor = '#ec5b15';
+    popup.style.color = '#fff';
+    popup.style.padding = '10px 15px';
+    popup.style.marginTop = '10px';
+    popup.style.borderRadius = '5px';
+    popup.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+    popup.style.cursor = 'pointer';
+    popup.style.transition = 'opacity 0.5s ease-in-out';
+    popup.style.position = 'fixed';
+    popup.style.bottom = '20px';
+    popup.style.right = '20px';
+    popup.innerHTML = message;
+
+    // Redirection sur clic
+    popup.onclick = () => {
+        window.location.href = link;
+    };
+
+    // Ajouter le pop-up au conteneur
+    document.body.appendChild(popup);
+
+    // Supprimer le pop-up après 5 secondes
+    setTimeout(() => {
+        popup.style.opacity = '0';
+        setTimeout(() => {
+            popup.remove();
+        }, 500);
+    }, 5000);
+}
+
+// Écoute des événements de modification des coordonnées
+socket.on('formateurUpdate', (data) => {
+    console.log('Notification reçue côté admin :', data); // Vérifiez si le client reçoit les données
+    if (data && data.message) {
+        showPopup(data.message, '/admin/addformateur/addform.html');
+    }
+});
+   
+document.addEventListener("DOMContentLoaded", () => {
+    const formateursBadge = document.getElementById("formateurs-badge");
+    const ajoutFormateurBadge = document.getElementById("ajout-formateur-badge");
+
+    // Fonction pour mettre à jour les badges
+    function updateNavBarBadges() {
+        fetch('/database/notifications.json')
+            .then(response => response.json())
+            .then(data => {
+                if (data.notifications && Array.isArray(data.notifications)) {
+                    const notificationsCount = data.notifications.length;
+
+                    // Met à jour le badge de "Formateurs"
+                    if (notificationsCount > 0) {
+                        formateursBadge.style.display = "inline-block";
+                        formateursBadge.textContent = notificationsCount;
+                    } else {
+                        formateursBadge.style.display = "none";
+                    }
+
+                    // Filtre uniquement les notifications liées aux ajouts de formateurs
+                    const ajoutFormateursCount = data.notifications.filter(
+                        notification => notification.type === "update_formateur"
+                    ).length;
+
+                    // Met à jour le badge de "Ajout formateur"
+                    if (ajoutFormateursCount > 0) {
+                        ajoutFormateurBadge.style.display = "inline-block";
+                        ajoutFormateurBadge.textContent = ajoutFormateursCount;
+                    } else {
+                        ajoutFormateurBadge.style.display = "none";
+                    }
+                }
+            })
+            .catch(error => {
+                console.error("Erreur lors de la récupération des notifications :", error);
+            });
+    }
+
+    // Appelle la fonction au chargement
+    updateNavBarBadges();
+
+    // Met à jour les badges en temps réel via Socket.IO
+    const socket = io();
+    socket.on("formateurUpdate", () => {
+        updateNavBarBadges(); // Recharge les badges quand il y a une mise à jour
+    });
+});
+
+   </script>
+    
+</body>
+</html>

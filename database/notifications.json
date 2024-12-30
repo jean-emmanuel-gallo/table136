@@ -1,0 +1,11 @@
+{
+  "notifications": [
+    {
+      "id": 1735571219508,
+      "id_formateur": 25,
+      "type": "update_formateur",
+      "message": "Le formateur prenom Duduuuuuuu a mis à jour ses informations.",
+      "timestamp": "2024-12-30T15:06:59.508Z"
+    }
+  ]
+}

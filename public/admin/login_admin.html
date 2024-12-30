@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Connexion Admin</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="login_admin.js"></script>
+    <link rel="stylesheet" href="login_admin.css">
+</head>
+<body>
+
+<header>
+    <nav>
+        <a href="../index.html">Retour</a>
+    </nav>
+</header>
+    <div class="form-container">
+        <h2>Connexion Admin</h2>
+        <form id="loginForm" action="/login/admin" method="POST">
+            <label for="username">Nom d'utilisateur:</label>
+            <input type="text" id="username" name="username" required>
+            <br>
+            <label for="password">Mot de passe:</label>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <button id="logout-btn" type="submit">Se connecter</button>
+        </form>
+    </div>
+    <div class="image-container"></div>
+</body>
+</html>

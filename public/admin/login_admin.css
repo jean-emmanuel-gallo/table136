@@ -1,0 +1,113 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #ffffff;
+}
+
+header {
+    width: 100%;
+    padding: 10px;
+    background-color: #ec5b15;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 90%;
+    max-width: 400px;
+    margin: 20px;
+}
+
+h2 {
+    color: #f05423;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 10px;
+}
+
+input {
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+}
+
+button {
+    background-color: #ec5b15;
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 18px;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #d9431f;
+}
+
+.image-container {
+    display: none;
+}
+
+@media (min-width: 768px) {
+
+    header {
+        width: 100%;
+        padding: 10px;
+        background-color: #ec5b15;
+        z-index: 999999;
+        position: absolute;
+    }
+
+    .form-container {
+        position: absolute;
+        top: 40%;
+        left: 210px;
+        transform: translateY(-50%);
+        text-align: left;
+        z-index: 9;
+        padding: 9%;
+    }
+
+    .image-container {
+        display: block;
+        width: 34%;
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('../medical-senior-health-doctor-thumbnail.jpg');
+        background-size: cover;
+        background-position: right;
+    }
+}

@@ -1,0 +1,345 @@
+{
+  "deletedEvents": [
+    {
+      "id": 159,
+      "theme_id": 2,
+      "date_debut": "08/07/2025",
+      "date_fin": "8/7/2025",
+      "ville": "Toulouse",
+      "methode": "présentiel",
+      "remarque": "",
+      "formateur_ids": [],
+      "num_s": 137
+    },
+    {
+      "id": 412,
+      "theme_id": 4,
+      "secondary_theme_id": 69,
+      "date_debut": "27/11/2024",
+      "date_fin": "28/11/2024",
+      "ville": "Toulouse",
+      "choix": "En attente",
+      "methode": "présentiel",
+      "remarque": "",
+      "formateur_ids": [
+        71
+      ],
+      "num_s": 379,
+      "formateur_status": {
+        "71": "En attente"
+      },
+      "nonAssignableFormateurs": [
+        25
+      ]
+    },
+    {
+      "id": 534,
+      "theme_id": 3,
+      "secondary_theme_id": null,
+      "date_debut": "09/09/2024",
+      "date_fin": "10/09/2024",
+      "ville": "Toulouse",
+      "choix": "En attente",
+      "methode": "présentiel",
+      "remarque": "",
+      "formateur_ids": [],
+      "num_s": 498,
+      "formateur_status": {},
+      "nonAssignableFormateurs": [
+        2,
+        25,
+        28,
+        30
+      ]
+    },
+    {
+      "id": 347,
+      "theme_id": 67,
+      "date_debut": "18/11/2024",
+      "date_fin": "18/11/2024",
+      "ville": "Toulouse",
+      "choix": "En attente",
+      "methode": "soirée",
+      "remarque": "",
+      "formateur_ids": [
+        116
+      ],
+      "num_s": 316,
+      "formateur_status": {
+        "116": "En attente"
+      },
+      "nonAssignableFormateurs": [
+        25,
+        65,
+        89,
+        110,
+        30,
+        39,
+        135
+      ]
+    },
+    {
+      "id": 345,
+      "theme_id": 4,
+      "date_debut": "19/11/2024",
+      "date_fin": "20/11/2024",
+      "ville": "Lyon",
+      "choix": "En attente",
+      "methode": "classe virtuelle",
+      "remarque": "",
+      "formateur_ids": [],
+      "num_s": 315,
+      "formateur_status": {},
+      "formateur_status_dates": {
+        "25": "2024-11-29T08:40:23.414Z"
+      },
+      "nonAssignableFormateurs": [
+        25,
+        22,
+        69,
+        70,
+        26,
+        23,
+        21,
+        27,
+        28,
+        29,
+        71,
+        22
+      ]
+    },
+    {
+      "id": 534,
+      "theme_id": 81,
+      "secondary_theme_id": null,
+      "date_debut": "19/11/2024",
+      "date_fin": "19/11/2024",
+      "ville": "Toulouse",
+      "choix": "En attente",
+      "methode": "présentiel",
+      "remarque": "",
+      "formateur_ids": [],
+      "num_s": 498,
+      "formateur_status": {},
+      "nonAssignableFormateurs": [
+        25
+      ]
+    },
+    {
+      "id": 407,
+      "theme_id": 56,
+      "date_debut": "16/01/2025",
+      "date_fin": "17/01/2025",
+      "ville": "Toulon",
+      "choix": "En attente",
+      "methode": "présentiel",
+      "remarque": "",
+      "formateur_ids": [
+        110
+      ],
+      "num_s": 374,
+      "formateur_status": {
+        "110": "En attente"
+      }
+    },
+    {
+      "id": 409,
+      "theme_id": 67,
+      "date_debut": "20/01/2025",
+      "date_fin": "20/01/2025",
+      "ville": "Nice",
+      "choix": "En attente",
+      "methode": "présentiel",
+      "remarque": "",
+      "formateur_ids": [
+        110
+      ],
+      "num_s": 376,
+      "formateur_status": {
+        "110": "En attente"
+      }
+    },
+    {
+      "id": 408,
+      "theme_id": 56,
+      "date_debut": "21/01/2025",
+      "date_fin": "22/01/2025",
+      "ville": "Nice",
+      "choix": "En attente",
+      "methode": "présentiel",
+      "remarque": "",
+      "formateur_ids": [
+        110
+      ],
+      "num_s": 375,
+      "formateur_status": {
+        "110": "En attente"
+      }
+    },
+    {
+      "id": 535,
+      "theme_id": 56,
+      "secondary_theme_id": null,
+      "date_debut": "16/02/2025",
+      "date_fin": "17/02/2025",
+      "ville": "Toulon",
+      "choix": "En attente",
+      "methode": "présentiel",
+      "remarque": "",
+      "formateur_ids": [
+        110
+      ],
+      "num_s": 498,
+      "formateur_status": {
+        "110": "En attente"
+      }
+    },
+    {
+      "id": 536,
+      "theme_id": 67,
+      "secondary_theme_id": null,
+      "date_debut": "20/02/2025",
+      "date_fin": "20/02/2025",
+      "ville": "Nice",
+      "choix": "En attente",
+      "methode": "présentiel",
+      "remarque": "",
+      "formateur_ids": [
+        110
+      ],
+      "num_s": 499,
+      "formateur_status": {
+        "110": "En attente"
+      }
+    },
+    {
+      "id": 537,
+      "theme_id": 56,
+      "secondary_theme_id": null,
+      "date_debut": "21/02/2025",
+      "date_fin": "22/02/2025",
+      "ville": "Nice",
+      "choix": "En attente",
+      "methode": "présentiel",
+      "remarque": "",
+      "formateur_ids": [
+        110
+      ],
+      "num_s": 500,
+      "formateur_status": {
+        "110": "En attente"
+      }
+    },
+    {
+      "id": 540,
+      "theme_id": 35,
+      "secondary_theme_id": null,
+      "date_debut": "07/02/2025",
+      "date_fin": "07/02/2025",
+      "ville": "Nice",
+      "choix": "En attente",
+      "methode": "présentiel",
+      "remarque": "",
+      "formateur_ids": [],
+      "num_s": 503
+    },
+    {
+      "id": 538,
+      "theme_id": 56,
+      "secondary_theme_id": null,
+      "date_debut": "03/02/2025",
+      "date_fin": "04/02/2025",
+      "ville": "Aix En Provence",
+      "choix": "En attente",
+      "methode": "présentiel",
+      "remarque": "",
+      "formateur_ids": [
+        111
+      ],
+      "num_s": 501,
+      "formateur_status": {
+        "111": "En attente"
+      }
+    },
+    {
+      "id": 565,
+      "theme_id": 4,
+      "secondary_theme_id": null,
+      "date_debut": "10/02/2025",
+      "date_fin": "11/02/2025",
+      "ville": "Toulouse",
+      "choix": "En attente",
+      "methode": "présentiel",
+      "remarque": "",
+      "formateur_ids": [],
+      "num_s": 527
+    },
+    {
+      "id": 1,
+      "theme_id": 4,
+      "secondary_theme_id": null,
+      "date_debut": "13/02/2025",
+      "date_fin": "14/02/2025",
+      "ville": "Toulouse",
+      "choix": "En attente",
+      "methode": "présentiel",
+      "remarque": "",
+      "formateur_ids": [],
+      "num_s": 1
+    },
+    {
+      "id": 156,
+      "theme_id": 2,
+      "date_debut": "14/08/2024",
+      "date_fin": "14/8/2024",
+      "ville": "Toulouse",
+      "methode": "présentiel",
+      "remarque": "",
+      "formateur_ids": [],
+      "num_s": 135,
+      "nonAssignableFormateurs": [
+        25,
+        135
+      ],
+      "choix": "En attente",
+      "formateur_status": {}
+    },
+    {
+      "id": 1,
+      "theme_id": 4,
+      "secondary_theme_id": null,
+      "date_debut": "13/02/2025",
+      "date_fin": "14/02/2025",
+      "ville": "Toulouse",
+      "choix": "En attente",
+      "methode": "présentiel",
+      "remarque": "",
+      "formateur_ids": [],
+      "num_s": 1,
+      "formateur_status": {},
+      "nonAssignableFormateurs": [
+        25
+      ]
+    },
+    {
+      "id": 1,
+      "theme_id": 4,
+      "secondary_theme_id": null,
+      "date_debut": "13/02/2025",
+      "date_fin": "14/02/2025",
+      "ville": "A domicile",
+      "choix": "Refusé",
+      "methode": "présentiel",
+      "remarque": "dfbfdbfdbdfb",
+      "formateur_ids": [
+        25
+      ],
+      "num_s": 1,
+      "constel": false,
+      "dpc": false,
+      "formateur_status": {
+        "25": "refusé"
+      }
+    }
+  ]
+}

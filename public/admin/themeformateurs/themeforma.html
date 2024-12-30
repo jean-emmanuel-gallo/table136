@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Thèmes et Formateurs</title>
+    <link rel="icon" type="image/x-icon" href="../favicon.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../pages.css">
+    <style>
+        .formateur-view-wrapper {
+            overflow: hidden;
+            padding: 10px;
+            overflow: auto;
+            scrollbar-color: rgb(236, 91, 21) rgb(241, 241, 241);
+            scrollbar-width: thin;
+            height: 535px;
+        }
+
+        .mb-3, .my-3 {
+            margin-bottom: 0 !important;
+        }
+    
+        .btn-primary {
+            color: #fff;
+            background-color: #ec5b15;
+            border-color: #ec5b15;
+        }
+
+        .btn-primary:hover {
+            color: #fff;
+            background-color: #ec5b15;
+            border-color: #ec5b15;
+        }
+
+        .btn-primary:active {
+            color: #fff;
+            background-color: #ec5b15 !important;
+            border-color: #ec5b15 !important;
+        }
+        .btn-primary.focus, .btn-primary:focus {
+            box-shadow: 0 0 0 .2rem rgba(255, 118, 38, 0.5) !important;
+        }
+
+
+        .btn-success {
+            color: #fff;
+            background-color: #ec5b15;
+            border-color: #ec5b15;
+        }
+
+        .btn-success:hover {
+            color: #fff;
+            background-color: #ec5b15;
+            border-color: #ec5b15;
+        }
+
+        .btn-success:active {
+            color: #fff;
+            background-color: #ec5b15 !important;
+            border-color: #ec5b15 !important;
+        }
+        .btn-success.focus, .btn-success:focus {
+            box-shadow: 0 0 0 .2rem rgba(255, 118, 38, 0.5) !important;
+        }
+
+
+        .btn-success:not(:disabled):not(.disabled).active, .btn-success:not(:disabled):not(.disabled):active, .show>.btn-success.dropdown-toggle {
+        color: #fff;
+        background-color: #ec5b15;
+        border-color: #ec5b15;
+    }
+
+        .formateur-container {
+            display: flex;
+            overflow-x: auto;
+            overflow-y: hidden;
+            width: 100%;
+            max-width: 100%;
+            padding: 10px;
+        }
+    
+        .formateur-column {
+            margin-right: 20px;
+            text-align: center;
+            flex: 0 0 auto;
+        }
+    
+        .theme-item {
+            padding: 10px;
+            margin-bottom: 5px;
+            cursor: pointer;
+            list-style-type: none;
+            color: white;
+            text-align: center;
+        }
+    
+                /* Bouton pour afficher la carte */
+                .map-btn {
+            background-color: #ec5b15;
+            border: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+        }
+
+        .map-btn img {
+            width: 30px;
+            height: 30px;
+        }
+
+        /* Styles pour le modal de la carte */
+        .map-modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+        }
+
+        .map-content-container {
+            margin: auto;
+            display: block;
+            width: 80%;
+            height: 80%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .map-content {
+            width: 100%;
+            height: auto;
+            transition: transform 0.25s ease;
+            cursor: zoom-in;
+        }
+
+        .map-content.zoomed {
+            cursor: zoom-out;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #ec5b15;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            z-index: 1002;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .formateur-name {
+            background-color: #ec5b15;
+            padding: 10px;
+            color: white;
+            margin-bottom: 10px;
+        }
+    
+        .remove {
+            color: red;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+    
+        .assign {
+            color: green;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+    
+        .row {
+            justify-content: center;
+        }
+    
+        .formateur-container::-webkit-scrollbar {
+            height: 10px;
+        }
+    
+        .formateur-container::-webkit-scrollbar-thumb {
+            background-color: #ec5b15;
+            border-radius: 10px;
+        }
+    
+        .formateur-container::-webkit-scrollbar-track {
+            background-color: #f1f1f1;
+        }
+    
+        /* Pour Firefox et autres navigateurs */
+        .formateur-container {
+            scrollbar-color: #ec5b15 #f1f1f1;
+            scrollbar-width: thin;
+        }
+
+
+        #formateurs-view {
+            overflow: auto;
+            scrollbar-color: rgb(236, 91, 21) rgb(241, 241, 241);
+            scrollbar-width: thin;
+            height: 512px;
+        }
+    
+        @media (min-width: 768px) {
+            .col-md-6 {
+                width: 1144px !important;
+                max-width: none;
+                flex: 100%;
+            }
+        }
+
+        @media (min-width: 1200px) {
+    .container {
+        max-width: 1673px;
+    }
+}
+    </style>
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <img id="logo_brand" src="../logo_orion-web_white.png" alt="">
+            <ul id="navlist">
+                <li><a href="../acc_admin.html">Gestion Session</a></li>
+                <li><a href="../t_archive.html">Formations archivées</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Formateurs <span id="formateurs-badge" class="badge badge-warning" style="display: none;">0</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="../logforma.html">Logs des formateurs</a>
+                        <a class="dropdown-item" href="../addformateur/addform.html">
+                            Ajout formateur <span id="../ajout-formateur-badge" class="badge badge-warning" style="display: none;">0</span>
+                        </a>
+                        <a class="dropdown-item" href="../forgot_password.html">Mots de passe oubliés</a>
+                    </div>
+                </li>
+                <li><a href="../themeformateurs/themeforma.html">Thèmes et assignations</a></li>
+                <li><a href="../logadmin.html">Logs de Véronique</a></li>
+                <li><a href="#" id="logout-btn">Déconnexion</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container mt-5">
+        <button class="btn btn-primary mb-3" id="toggleViewBtn">Changer l'affichage</button>
+        <button class="btn btn-success mb-3" id="addNewThemeBtn">Ajouter un Nouveau Thème</button>
+            <button class="btn btn-success dropdown-toggle" type="button" id="downloadThemesDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Télécharger les Thèmes
+            </button>
+            <div class="dropdown-menu" aria-labelledby="downloadThemesDropdown">
+                <a class="dropdown-item" href="#" id="downloadThemesPDF">Télécharger en PDF</a>
+                <a class="dropdown-item" href="#" id="downloadThemesExcel">Télécharger en Excel</a>
+                <a class="dropdown-item" href="#" id="downloadThemesJSON">Télécharger en JSON</a>
+            </div>
+                <h1>Gestion des Thèmes et Formateurs</h1>
+        <div id="themes-view" class="row">
+            <div class="col-md-6">
+                <h3>Liste des Thèmes</h3>
+                <div class="form-group">
+                    <label for="filterType">Filtrer par type de financement</label>
+                    <select class="form-control" id="filterType">
+                        <option value="all">Tous</option>
+                        <option value="FIFPL">FIFPL</option>
+                        <option value="DPC">DPC</option>
+                        <option value="CV-DPC">CV-DPC</option>
+                        <option value="DPC/FIFPL">DPC/FIFPL</option>
+                        <option value="EPP">EPP</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="searchThemes">Rechercher un thème</label>
+                    <input type="text" class="form-control" id="searchThemes" placeholder="Entrez le nom d'un thème...">
+                </div>                
+                <ul id="themes-list">
+                    <!-- Les thèmes seront ajoutés ici dynamiquement -->
+                </ul>
+            </div>
+            <div style="display: none;" class="col-md-6">
+                <h3>Formateurs</h3>
+                <ul id="formateurs-list">
+                    <!-- Les formateurs seront ajoutés ici dynamiquement -->
+                </ul>
+            </div>
+        </div>
+        <div class="formateur-view-wrapper">
+            <div id="formateurs-view" class="formateur-container" style="display: none;">
+                <!-- Les formateurs et leurs thèmes seront ajoutés ici dynamiquement -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal pour modifier le thème -->
+    <div class="modal fade" id="themeModal" tabindex="-1" role="dialog" aria-labelledby="themeModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="themeModalLabel">Modifier le Thème</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <button type="button" class="btn btn-secondary" id="print-theme-btn" style="margin-top: 10px;">
+                    Éditer la fiche du thème
+                </button>                
+                <div class="modal-body">
+                    <form id="themeForm">
+                        <div class="form-group">
+                            <label for="themeName">Nom</label>
+                            <input type="text" class="form-control" id="themeName">
+                        </div>
+                        <div class="form-group">
+                            <label for="themeType">Type</label>
+                            <input type="text" class="form-control" id="themeType">
+                        </div>
+                        <div class="form-group">
+                            <label for="themeColor">Couleur de fond (HEX)</label>
+                            <input type="color" class="form-control" id="themeColor">
+                        </div>
+                        <div class="form-group">
+                            <label for="themeDuration">Durée</label>
+                            <input type="text" class="form-control" id="themeDuration">
+                        </div>
+                        <div class="form-group">
+                            <label for="assignedFormateurs">Formateurs assignés</label>
+                            <ul id="assignedFormateurs">
+                                <!-- Formateurs assignés seront ajoutés ici dynamiquement -->
+                            </ul>
+                        </div>
+                        <button type="button" class="btn btn-secondary mb-3" id="assignFormateursBtn">Assigner un ou plusieurs formateurs</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button type="button" class="btn btn-danger" id="deleteTheme">Supprimer</button>
+                    <button type="button" class="btn btn-primary" id="saveThemeChanges">Enregistrer les modifications</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal pour ajouter un nouveau thème -->
+    <div class="modal fade" id="addThemeModal" tabindex="-1" role="dialog" aria-labelledby="addThemeModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addThemeModalLabel">Ajouter un nouveau thème</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addThemeForm">
+                        <div class="form-group">
+                            <label for="newThemeName">Nom du thème</label>
+                            <input type="text" class="form-control" id="newThemeName" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newThemeType">Type</label>
+                            <input type="text" class="form-control" id="newThemeType" name="type" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newThemeColor">Couleur de fond</label>
+                            <input type="color" class="form-control" id="newThemeColor" name="bck_color" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newThemeDuration">Durée (jours)</label>
+                            <input type="number" class="form-control" id="newThemeDuration" name="duration" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newThemeFormateurs">Formateurs assignés</label>
+                            <ul id="newThemeFormateurs">
+                                <!-- Liste des formateurs disponibles pour assignation -->
+                            </ul>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Ajouter le thème</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal pour assigner des formateurs -->
+    <div class="modal fade" id="assignFormateursModal" tabindex="-1" role="dialog" aria-labelledby="assignFormateursModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="assignFormateursModalLabel">Assigner des formateurs</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <button type="button" class="btn btn-primary mb-3" id="confirmAssignFormateurs" disabled>Confirmer l'assignation</button>
+                    <form id="assignFormateursForm">
+                        <div class="form-group">
+                            <label for="availableFormateurs">Formateurs disponibles</label>
+                            <ul id="availableFormateurs">
+                                <!-- Formateurs disponibles seront ajoutés ici dynamiquement -->
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+        <!-- Bouton pour afficher la carte -->
+        <button id="show-map-btn" class="map-btn">
+            <img src="../bmap.svg" alt="Carte" />
+        </button>
+    
+        <!-- Conteneur pour la carte -->
+        <div id="map-modal" class="map-modal">
+            <span class="close-btn">&times;</span>
+            <img src="../map_form.jpg" alt="Carte Formations" class="map-content">
+        </div>
+        <script type="module" src="../map.js"></script>
+        <script src="../admin-notifications.js"></script>
+        <script src="themeFormateur.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            // Initialisation de Socket.IO
+            const socket = io();
+            
+            // Fonction pour afficher le pop-up
+            function showPopup(message, link) {
+                const popup = document.createElement('div');
+                popup.style.backgroundColor = '#ec5b15';
+                popup.style.color = '#fff';
+                popup.style.padding = '10px 15px';
+                popup.style.marginTop = '10px';
+                popup.style.borderRadius = '5px';
+                popup.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+                popup.style.cursor = 'pointer';
+                popup.style.transition = 'opacity 0.5s ease-in-out';
+                popup.style.position = 'fixed';
+                popup.style.bottom = '20px';
+                popup.style.right = '20px';
+                popup.innerHTML = message;
+            
+                // Redirection sur clic
+                popup.onclick = () => {
+                    window.location.href = link;
+                };
+            
+                // Ajouter le pop-up au conteneur
+                document.body.appendChild(popup);
+            
+                // Supprimer le pop-up après 5 secondes
+                setTimeout(() => {
+                    popup.style.opacity = '0';
+                    setTimeout(() => {
+                        popup.remove();
+                    }, 500);
+                }, 5000);
+            }
+            
+            // Écoute des événements de modification des coordonnées
+            socket.on('formateurUpdate', (data) => {
+                console.log('Notification reçue côté admin :', data); // Vérifiez si le client reçoit les données
+                if (data && data.message) {
+                    showPopup(data.message, '/admin/addformateur/addform.html');
+                }
+            });
+               
+            document.addEventListener("DOMContentLoaded", () => {
+                const formateursBadge = document.getElementById("formateurs-badge");
+                const ajoutFormateurBadge = document.getElementById("ajout-formateur-badge");
+            
+                // Fonction pour mettre à jour les badges
+                function updateNavBarBadges() {
+                    fetch('/database/notifications.json')
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.notifications && Array.isArray(data.notifications)) {
+                                const notificationsCount = data.notifications.length;
+            
+                                // Met à jour le badge de "Formateurs"
+                                if (notificationsCount > 0) {
+                                    formateursBadge.style.display = "inline-block";
+                                    formateursBadge.textContent = notificationsCount;
+                                } else {
+                                    formateursBadge.style.display = "none";
+                                }
+            
+                                // Filtre uniquement les notifications liées aux ajouts de formateurs
+                                const ajoutFormateursCount = data.notifications.filter(
+                                    notification => notification.type === "update_formateur"
+                                ).length;
+            
+                                // Met à jour le badge de "Ajout formateur"
+                                if (ajoutFormateursCount > 0) {
+                                    ajoutFormateurBadge.style.display = "inline-block";
+                                    ajoutFormateurBadge.textContent = ajoutFormateursCount;
+                                } else {
+                                    ajoutFormateurBadge.style.display = "none";
+                                }
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Erreur lors de la récupération des notifications :", error);
+                        });
+                }
+            
+                // Appelle la fonction au chargement
+                updateNavBarBadges();
+            
+                // Met à jour les badges en temps réel via Socket.IO
+                const socket = io();
+                socket.on("formateurUpdate", () => {
+                    updateNavBarBadges(); // Recharge les badges quand il y a une mise à jour
+                });
+            });
+            
+               </script>
+</body>
+</html>

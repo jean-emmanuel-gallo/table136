@@ -1,0 +1,34 @@
+{
+  "logins": [
+    {
+      "username": "Dudu",
+      "loginTime": "2024-12-09T15:58:48.967Z",
+      "logoutTime": "2024-12-09T15:58:59.847Z",
+      "duration": "0 minutes"
+    },
+    {
+      "username": "Dudu",
+      "loginTime": "2024-12-10T09:50:42.163Z",
+      "logoutTime": "2024-12-10T09:50:48.637Z",
+      "duration": "0 minutes"
+    },
+    {
+      "username": "Dudu",
+      "loginTime": "2024-12-10T12:26:45.106Z",
+      "logoutTime": "2024-12-10T12:26:47.492Z",
+      "duration": "0 minutes"
+    },
+    {
+      "username": "Dudu",
+      "loginTime": "2024-12-11T08:07:14.006Z",
+      "logoutTime": "2024-12-11T08:16:49.094Z",
+      "duration": "9 minutes"
+    },
+    {
+      "username": "Jean",
+      "loginTime": "2024-12-11T08:17:00.473Z",
+      "logoutTime": "2024-12-11T08:54:25.072Z",
+      "duration": "37 minutes"
+    }
+  ]
+}

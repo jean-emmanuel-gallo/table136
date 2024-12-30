@@ -1,0 +1,38 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #ffffff;
+    overflow: hidden;
+}
+
+.intro-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-image: url('background-image.jpg'); /* Utilisez l'image de fond souhaitée */
+    background-size: cover;
+    background-position: center;
+}
+
+.logo {
+    width: 50px; /* Taille de départ */
+    animation: grow 2s forwards;
+}
+
+@keyframes grow {
+    0% {
+        width: 50px;
+        opacity: 0;
+    }
+    100% {
+        width: 250px;
+        opacity: 1;
+    }
+}

@@ -1,0 +1,202 @@
+/* Appliquer box-sizing à tous les éléments */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #ffffff;
+    overflow-x: hidden;
+    background-image: url(nurse.webp);
+    background-size: cover;
+}
+
+header {
+    width: 100%;
+    padding: 10px;
+    background-color: #ec5b15;
+    height: 60px; /* Hauteur de la navbar */
+    display: flex;
+    align-items: center; /* Centrer verticalement */
+}
+
+nav img {
+    height: 80px; /* Ajuste la hauteur de l'image pour qu'elle soit adaptée à la navbar */
+    width: auto;  /* Conserver les proportions de l'image */
+}
+
+main {
+    background-color: #ec5b1578;
+    height: 100%;
+    width: 50%;
+    align-content: center;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 100%; /* Assure que l'élément prend toute la largeur disponible */
+    max-width: 400px;
+    margin: 20px auto;  /* Centrer le formulaire avec une marge */
+}
+
+#forgotpassword {
+    color: #ec5b15;
+    text-decoration: underline;
+}
+
+h2 {
+    color: #f05423;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 10px;
+}
+
+input {
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%; /* S'assurer que l'input prend 100% de la largeur disponible */
+}
+
+button {
+    background-color: #ec5b15;
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 18px;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%; /* S'assurer que le bouton prend 100% de la largeur disponible */
+}
+
+button:hover {
+    background-color: #d9431f;
+}
+
+.image-container {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    header {
+        width: 100%;
+        padding: 10px;
+        background-color: #ec5b15;
+        z-index: 999999;
+        position: absolute;
+    }
+
+
+
+    .form-container {
+        position: absolute;
+        top: 50%;  /* Placer l'élément à 50% de la hauteur du parent (ou de la fenêtre) */
+        left: 50%;  /* Placer l'élément à 50% de la largeur du parent (ou de la fenêtre) */
+        transform: translate(-50%, -50%);  /* Ajuster pour centrer parfaitement */
+        text-align: left;
+        z-index: 9;
+        width: 90%;  /* Ou toute autre largeur que tu préfères */
+        max-width: 400px;  /* Limiter la largeur maximale si nécessaire */
+    }
+
+
+    h2 {
+        color: #f05423;
+        font-size: 24px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .image-container {
+        display: block;
+        width: 34%;
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('nurse.webp');
+        background-size: cover;
+        background-position: right;
+    }
+
+    .image-container::before {
+        content: '';
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: #ec5b15;
+        opacity: 0.7;
+    }
+}
+@media (max-width: 768px) {
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #ffffff;
+        /* overflow-x: hidden; */
+        background-image: url(nurse.webp);
+        background-size: cover;
+        overflow: hidden;
+    }
+
+    main {
+        background-color: #ec5b1578;
+        width: 100% !important;
+        align-content: center;
+    }
+
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        background-color: #f7f7f7;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 100%; /* Utiliser toute la largeur disponible */
+        max-width: 400px;
+        margin: 20px auto;
+    }
+
+    input {
+        padding: 10px;
+        margin-top: 5px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 100%; /* S'assurer que les champs de formulaire ne débordent pas */
+    }
+
+
+}

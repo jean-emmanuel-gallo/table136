@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Connexion Formateur</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="login.js" defer></script>
+    <link rel="shortcut icon" href="ffavicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <header>
+        <nav><img src="logo_white.png" alt=""></nav>
+    </header>
+    <main>
+        <div class="form-container">        
+                <h2>Connexion Formateur</h2>
+                <form id="loginForm" action="/login/formateur" method="POST">
+                    <label for="username">Email:</label>
+                    <input type="text" id="username" name="username" required>
+                    <br>
+                    <label for="password">Mot de passe:</label>
+                    <input type="password" id="password" name="password" required>
+                    <br>
+                    <a id="forgotpassword" href="#">Mot de passe oublié</a>
+                    <button type="submit">Se connecter</button>
+                </form>
+        </div>
+</main>
+</body>
+</html>

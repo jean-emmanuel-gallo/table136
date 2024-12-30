@@ -1,0 +1,571 @@
+{
+  "themes": [
+    {
+      "id": 1,
+      "name": "FIFPL| La Prescription Infirmière",
+      "type": "FIFPL",
+      "bck_color": "#66ccff",
+      "duration": "1"
+    },
+    {
+      "id": 2,
+      "name": " Alcool, canabis : Repérer et prendre en charge les addictions",
+      "type": "DPC",
+      "bck_color": "#003300",
+      "duration": 3
+    },
+    {
+      "id": 3,
+      "name": "Cancers du sein : prévenir, dépister et prendre en charge",
+      "type": "DPC",
+      "bck_color": "#ccff99",
+      "duration": "2"
+    },
+    {
+      "id": 4,
+      "name": "Thème test",
+      "type": "DPC",
+      "bck_color": "#2f69d9",
+      "duration": "2"
+    },
+    {
+      "id": 6,
+      "name": "DPC-ADDICTIONS",
+      "type": "DPC",
+      "bck_color": "#ffffff",
+      "duration": "2"
+    },
+    {
+      "id": 7,
+      "name": "DPC-CANCER DU POUMON",
+      "type": "DPC",
+      "bck_color": "#c00000",
+      "duration": "2"
+    },
+    {
+      "id": 8,
+      "name": "DPC-CANCER DU SEIN",
+      "type": "DPC",
+      "bck_color": "#c65911",
+      "duration": "2"
+    },
+    {
+      "id": 9,
+      "name": "DPC-RISQUES CARDIOVASCULAIRES",
+      "type": "DPC",
+      "bck_color": "#008080",
+      "duration": "2"
+    },
+    {
+      "id": 10,
+      "name": "DPC-VACCINATION",
+      "type": "DPC",
+      "bck_color": "#ffccff",
+      "duration": "2"
+    },
+    {
+      "id": 11,
+      "name": "DPC-PARKINSON",
+      "type": "DPC",
+      "bck_color": "#ffffcc",
+      "duration": "2"
+    },
+    {
+      "id": 12,
+      "name": "DPC-OBÉSITÉ",
+      "type": "DPC",
+      "bck_color": "#00ff00",
+      "duration": "2"
+    },
+    {
+      "id": 13,
+      "name": "DPC-PATHO CARDIO",
+      "type": "DPC",
+      "bck_color": "#92D050",
+      "duration": 2
+    },
+    {
+      "id": 14,
+      "name": "DPC-PERTE AUTONOMIE",
+      "type": "DPC",
+      "bck_color": "#FF00FF",
+      "duration": 2
+    },
+    {
+      "id": 15,
+      "name": "DPC-PRATIQUE PRO BIEN TRAITANTE",
+      "type": "DPC",
+      "bck_color": "#CCECFF",
+      "duration": 2
+    },
+    {
+      "id": 16,
+      "name": "DPC-SANTÉ ENVIRONNEMENTALE",
+      "type": "DPC",
+      "bck_color": "#FFF3FF",
+      "duration": 2
+    },
+    {
+      "id": 17,
+      "name": "DPC-TÉLÉCONSULTATION",
+      "type": "DPC",
+      "bck_color": "#548235",
+      "duration": 2
+    },
+    {
+      "id": 18,
+      "name": "DPC-SANTÉ SEXUELLE",
+      "type": "DPC",
+      "bck_color": "#0099cc",
+      "duration": "2"
+    },
+    {
+      "id": 19,
+      "name": "DPC-ETP",
+      "type": "DPC",
+      "bck_color": "#00b0f0",
+      "duration": "2"
+    },
+    {
+      "id": 20,
+      "name": "DPC-ANXIÉTÉ",
+      "type": "DPC",
+      "bck_color": "#FFFFFF",
+      "duration": 2
+    },
+    {
+      "id": 21,
+      "name": "DPC-TROUBLES ANXIO",
+      "type": "DPC",
+      "bck_color": "#666699",
+      "duration": "2"
+    },
+    {
+      "id": 22,
+      "name": "CV-DPC-RISQUES CARDIOVASCULAIRES",
+      "type": "CV-DPC",
+      "bck_color": "#008080",
+      "duration": "1"
+    },
+    {
+      "id": 23,
+      "name": "CV-DPC-VACCINATION",
+      "type": "CV-DPC",
+      "bck_color": "#ffccff",
+      "duration": "1"
+    },
+    {
+      "id": 24,
+      "name": "CV-DPC-ADDICTIONS",
+      "type": "CV-DPC",
+      "bck_color": "#ffffff",
+      "duration": "1"
+    },
+    {
+      "id": 25,
+      "name": "CV-DPC-PATHO CARDIO",
+      "type": "CV-DPC",
+      "bck_color": "#92d050",
+      "duration": "1"
+    },
+    {
+      "id": 26,
+      "name": "CV-DPC-PERTE AUTONOMIE",
+      "type": "CV-DPC",
+      "bck_color": "#FF00FF",
+      "duration": 1
+    },
+    {
+      "id": 27,
+      "name": "CV-DPC-SANTÉ SEXUELLE",
+      "type": "CV-DPC",
+      "bck_color": "#0099CC",
+      "duration": 1
+    },
+    {
+      "id": 28,
+      "name": "CV-DPC-TÉLÉCONSULTATION",
+      "type": "CV-DPC",
+      "bck_color": "#548235",
+      "duration": 1
+    },
+    {
+      "id": 29,
+      "name": "FIFPL-SPAL",
+      "type": "FIFPL",
+      "bck_color": "#ddebf7",
+      "duration": "2"
+    },
+    {
+      "id": 30,
+      "name": "FIFPL-DIABÈTE",
+      "type": "FIFPL",
+      "bck_color": "#333f4f",
+      "duration": "2"
+    },
+    {
+      "id": 31,
+      "name": "FIFPL-NUTRITION",
+      "type": "FIFPL",
+      "bck_color": "#FFCCCC",
+      "duration": 2
+    },
+    {
+      "id": 32,
+      "name": "FIFPL-Urgence",
+      "type": "FIFPL",
+      "bck_color": "#993366",
+      "duration": "2"
+    },
+    {
+      "id": 33,
+      "name": "FIFPL-GESTION CABINET/DOSSIER DE SOINS",
+      "type": "FIFPL",
+      "bck_color": "#af9ec8",
+      "duration": "2"
+    },
+    {
+      "id": 34,
+      "name": "FIFPL-PRESCRIPTION",
+      "type": "FIFPL",
+      "bck_color": "#9bc2e6",
+      "duration": "1"
+    },
+    {
+      "id": 35,
+      "name": "FIFPL-NGAP",
+      "type": "FIFPL",
+      "bck_color": "#ff0000",
+      "duration": "1"
+    },
+    {
+      "id": 36,
+      "name": "FIFPL-ONCOLOGIE",
+      "type": "FIFPL",
+      "bck_color": "#990000",
+      "duration": 2
+    },
+    {
+      "id": 37,
+      "name": "FIFPL-RELATION COMM",
+      "type": "FIFPL",
+      "bck_color": "#CC3399",
+      "duration": 2
+    },
+    {
+      "id": 38,
+      "name": "FIFPL-TUTORAT",
+      "type": "FIFPL",
+      "bck_color": "#6600ff",
+      "duration": "2"
+    },
+    {
+      "id": 39,
+      "name": "MIXTE DPC-PLAIES-EPP",
+      "type": "DPC/FIFPL",
+      "bck_color": "#fff2cc",
+      "duration": "2"
+    },
+    {
+      "id": 40,
+      "name": "DPC/FIFPL-POST OP",
+      "type": "DPC/FIFPL",
+      "bck_color": "#9999ff",
+      "duration": "2"
+    },
+    {
+      "id": 41,
+      "name": "MONTHEME",
+      "type": "DPC",
+      "bck_color": "#000000",
+      "duration": 1
+    },
+    {
+      "id": 42,
+      "name": "BILAN SOIN INFIRMIER",
+      "type": "FIFPL",
+      "bck_color": "#44b3e1",
+      "duration": "2"
+    },
+    {
+      "id": 43,
+      "name": "FIFPL| Soins infirmiers : prise en charge dans le cadre de la chirurgie ambulatoire ou RAAC (POST OPERATOIRE)",
+      "type": "DPC-FIFPL",
+      "bck_color": "#9999ff",
+      "duration": "2"
+    },
+    {
+      "id": 44,
+      "name": "DPC| Alzheimer : Dépister et prendre en charge",
+      "type": "DPC",
+      "bck_color": "#ed7d31",
+      "duration": "2"
+    },
+    {
+      "id": 45,
+      "name": "FIFPL| Prise en charge des patients insuffisants cardiaques ou atteints d'une BPCO",
+      "type": "FIFPL",
+      "bck_color": "#00b050",
+      "duration": "2"
+    },
+    {
+      "id": 46,
+      "name": "DPC| Bon usage des médicaments chez la personne âgée",
+      "type": "DPC",
+      "bck_color": "#bf8f00",
+      "duration": "2"
+    },
+    {
+      "id": 47,
+      "name": "FIFPL| La nomenclature des actes professionnels : \"Les soins infirmiers et leur cotation\"",
+      "type": "FIFPL",
+      "bck_color": "#ff0000",
+      "duration": "1"
+    },
+    {
+      "id": 48,
+      "name": "FIFPL| La nomenclature des actes professionnels : Module Perfectionnement",
+      "type": "FIFPL",
+      "bck_color": "#ff3300",
+      "duration": "2"
+    },
+    {
+      "id": 49,
+      "name": "FIFPL| Prescription des vaccins",
+      "type": "FIFPL",
+      "bck_color": "#0b3040",
+      "duration": "2"
+    },
+    {
+      "id": 50,
+      "name": "FIFPL| Gestion des allergies",
+      "type": "FIFPL",
+      "bck_color": "#cccc00",
+      "duration": "2"
+    },
+    {
+      "id": 51,
+      "name": "ttte",
+      "type": "DPC",
+      "bck_color": "#000000",
+      "duration": "2"
+    },
+    {
+      "id": 52,
+      "name": "FIFPL| Prise en charge de plaies chroniques",
+      "type": "FIFPL",
+      "bck_color": "#ffc000",
+      "duration": 2
+    },
+    {
+      "id": 53,
+      "name": "DPC - Soins infirmiers et surveillance des patients porteurs de stomie",
+      "type": "DPC",
+      "bck_color": "#000000",
+      "duration": "2"
+    },
+    {
+      "id": 54,
+      "name": "DPC-FIFPL - Soins infirmiers et surveillance des patients en période post opératoire immédiate",
+      "type": "FIFPL/DPC",
+      "bck_color": "#000000",
+      "duration": "2"
+    },
+    {
+      "id": 55,
+      "name": "DPC - VIOLENCES FEMMES",
+      "type": "DPC",
+      "bck_color": "#ff7c80",
+      "duration": "2"
+    },
+    {
+      "id": 56,
+      "name": "DPC-FIFPL - VACCINATION",
+      "type": "DPC/FIFPL",
+      "bck_color": "#ffccff",
+      "duration": "2"
+    },
+    {
+      "id": 57,
+      "name": "DPC - Voies vaineuses centrales et évaluation des pratiaues ",
+      "type": "DPC",
+      "bck_color": "#000000",
+      "duration": 2
+    },
+    {
+      "id": 58,
+      "name": "FIFPL | Les soins d'accompagnement en fin de vie",
+      "type": "FIFPL",
+      "bck_color": "#000000",
+      "duration": 2
+    },
+    {
+      "id": 59,
+      "name": "CV-FIFPL ACCOMPAGNEMENT A L ARRET DU TABAC",
+      "type": "FIFPL",
+      "bck_color": "#cc0066",
+      "duration": "1"
+    },
+    {
+      "id": 60,
+      "name": "2024DPCCV | SAVOIR PRATIQUER : TÉLÉCONSULTATION, TÉLÉSOIN",
+      "type": "DPC",
+      "bck_color": "#66ffcc",
+      "duration": "2"
+    },
+    {
+      "id": 61,
+      "name": "2024ORION | S’installer en libéral",
+      "type": "ORION",
+      "bck_color": "#b45555",
+      "duration": "1"
+    },
+    {
+      "id": 62,
+      "name": "THEMASUPP",
+      "type": "DPC",
+      "bck_color": "#000000",
+      "duration": "2"
+    },
+    {
+      "id": 63,
+      "name": "2024DPC | Douleur aiguë chez la personne âgée",
+      "type": "DPC",
+      "bck_color": "#000000",
+      "duration": "2"
+    },
+    {
+      "id": 63,
+      "name": "2024DPC | Douleur aiguë chez la personne âgée",
+      "type": "DPC",
+      "bck_color": "#000000",
+      "duration": "2"
+    },
+    {
+      "id": 64,
+      "name": "2024DPC | Situations sanitaires exceptionnelles (SSE)",
+      "type": "DPC",
+      "bck_color": "#000000",
+      "duration": 2
+    },
+    {
+      "id": 65,
+      "name": "2024DPC | Annonce d'une maladie neurodégénérative",
+      "type": "DPC",
+      "bck_color": "#000000",
+      "duration": 2
+    },
+    {
+      "id": 66,
+      "name": "DPC/FIFPL-PLAIES",
+      "type": "DPC/FIFPL",
+      "bck_color": "#ffc000",
+      "duration": "2"
+    },
+    {
+      "id": 67,
+      "name": "EPP-POST OP",
+      "type": "EPP",
+      "bck_color": "#99ff99",
+      "duration": "1"
+    },
+    {
+      "id": 68,
+      "name": "FIFPL-NGAP PERF",
+      "type": "FIFPL",
+      "bck_color": "#ff5050",
+      "duration": "1"
+    },
+    {
+      "id": 69,
+      "name": "EPP-BSI",
+      "type": "BSI",
+      "bck_color": "#0070c0",
+      "duration": "1"
+    },
+    {
+      "id": 70,
+      "name": "MIXTE DPC-POST OP",
+      "type": "DPC",
+      "bck_color": "#99ff99",
+      "duration": "1"
+    },
+    {
+      "id": 71,
+      "name": "AFGSU 2",
+      "type": "FIFPL",
+      "bck_color": "#6600cc",
+      "duration": "3"
+    },
+    {
+      "id": 72,
+      "name": "FIFPL-PLAIES",
+      "type": "FIFPL",
+      "bck_color": "#ffc000",
+      "duration": "2"
+    },
+    {
+      "id": 73,
+      "name": "EPP - PICC-LINE (9h-17h)",
+      "type": "EPP",
+      "bck_color": "#ffcc66",
+      "duration": "1"
+    },
+    {
+      "id": 74,
+      "name": "CV-FIFPL-BSI",
+      "type": "FIFPL",
+      "bck_color": "#002060",
+      "duration": "1"
+    },
+    {
+      "id": 75,
+      "name": "DPC-STOMIE",
+      "type": "DPC",
+      "bck_color": "#990099",
+      "duration": "2"
+    },
+    {
+      "id": 76,
+      "name": "MIXTE DPC - EPP - PLAIES ULCERE DE JAMBES",
+      "type": "MIXTE DPC/EPP",
+      "bck_color": "#00cc99",
+      "duration": "1"
+    },
+    {
+      "id": 77,
+      "name": "DPC-EPP-VVC",
+      "type": "DPC",
+      "bck_color": "#ccffcc",
+      "duration": "2"
+    },
+    {
+      "id": 78,
+      "name": "DPC-AIDANTS",
+      "type": "DPC",
+      "bck_color": "#ff9999",
+      "duration": "2"
+    },
+    {
+      "id": 79,
+      "name": "EPP-CARDIO",
+      "type": "EPP",
+      "bck_color": "#00ffff",
+      "duration": "1"
+    },
+    {
+      "id": 80,
+      "name": "DPC-TELECONSULTATION",
+      "type": "DPC",
+      "bck_color": "#548235",
+      "duration": "2"
+    },
+    {
+      "id": 81,
+      "name": "test2",
+      "type": "DPC",
+      "bck_color": "#000000",
+      "duration": "1"
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+nav   {
+    display: flex;
+}
+
+#navlist {
+    list-style: none;
+    display: flex;
+    margin-top: 1%;
+}
+
+#navlist li {
+    margin-left: 50px;
+}
+
+.dropdown-menu {
+    background-color: #ec5b15;
+    border: 1px solid #ffffff;
+}
+
+.dropdown-item:hover {
+    background-color: #EC5B15;
+    text-decoration:underline;
+}
+
+.dropdown-item:hover {
+    background-color: #EC5B15;
+    text-decoration:underline !important;
+}
+
+#navlist li a {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color:#007bff;
+    text-decoration: none;
+}
+
+header {
+            background-color: #ec5b15;
+        }
+
+        #logo_brand {
+            height: 66px;
+            width: auto;
+        }
+
+        #navlist {
+            list-style: none;
+            display: flex;
+            margin-top: 1%;
+            margin-left: 1%;
+        }
+
+        #navlist li a {
+            color: white;
+        }

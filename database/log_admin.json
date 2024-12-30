@@ -1,0 +1,58 @@
+{
+  "logins": [
+    {
+      "username": "Véronique",
+      "loginTime": "2024-12-09T15:54:31.905Z",
+      "logoutTime": "2024-12-09T15:54:34.559Z",
+      "duration": "0 minutes"
+    },
+    {
+      "username": "admin1",
+      "loginTime": "2024-12-10T15:16:57.316Z",
+      "logoutTime": "2024-12-10T15:36:17.423Z",
+      "duration": "19 minutes"
+    },
+    {
+      "username": "admin1",
+      "loginTime": "2024-12-10T15:37:50.141Z",
+      "logoutTime": "2024-12-10T15:37:52.734Z",
+      "duration": "0 minutes"
+    },
+    {
+      "username": "admin1",
+      "loginTime": "2024-12-11T14:27:50.244Z",
+      "logoutTime": "2024-12-11T14:36:00.713Z",
+      "duration": "8 minutes"
+    },
+    {
+      "username": "admin1",
+      "loginTime": "2024-12-12T15:35:51.601Z",
+      "logoutTime": "2024-12-12T15:39:31.930Z",
+      "duration": "3 minutes"
+    },
+    {
+      "username": "admin1",
+      "loginTime": "2024-12-13T12:34:33.706Z",
+      "logoutTime": "2024-12-13T12:34:49.849Z",
+      "duration": "0 minutes"
+    },
+    {
+      "username": "Véronique",
+      "loginTime": "2024-12-13T12:34:53.896Z",
+      "logoutTime": "2024-12-13T13:03:01.204Z",
+      "duration": "28 minutes"
+    },
+    {
+      "username": "Véronique",
+      "loginTime": "2024-12-13T13:27:06.741Z",
+      "logoutTime": "2024-12-13T14:01:02.731Z",
+      "duration": "33 minutes"
+    },
+    {
+      "username": "admin1",
+      "loginTime": "2024-12-24T12:17:08.728Z",
+      "logoutTime": "2024-12-24T12:20:22.529Z",
+      "duration": "3 minutes"
+    }
+  ]
+}

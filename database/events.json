@@ -1,0 +1,83 @@
+{
+  "events": [
+    {
+      "id": 237,
+      "theme_id": 7,
+      "date_debut": "30/12/2024",
+      "date_fin": "31/12/2024",
+      "ville": "Marseille",
+      "latitude": 43.3025742,
+      "longitude": 5.369074299999999,
+      "choix": "Demande en attente",
+      "methode": "présentiel",
+      "remarque": "",
+      "formateur_ids": [
+        25
+      ],
+      "num_s": 212,
+      "formateur_status": {
+        "25": "pending-cancel"
+      },
+      "formateur_status_dates": {
+        "25": "2024-12-30T12:34:45.313Z"
+      },
+      "nonAssignableFormateurs": []
+    },
+    {
+      "id": 238,
+      "theme_id": 4,
+      "secondary_theme_id": null,
+      "date_debut": "30/12/2024",
+      "date_fin": "31/12/2024",
+      "ville": "Lyon",
+      "choix": "En attente",
+      "methode": "présentiel",
+      "remarque": "",
+      "formateur_ids": [
+        26
+      ],
+      "num_s": 213,
+      "latitude": 45.7578137,
+      "longitude": 4.8320114
+    },
+    {
+      "id": 240,
+      "theme_id": 4,
+      "secondary_theme_id": null,
+      "date_debut": "14/01/2025",
+      "date_fin": "15/01/2025",
+      "ville": "Marseille",
+      "choix": "En attente",
+      "methode": "présentiel",
+      "remarque": "",
+      "formateur_ids": [],
+      "num_s": 215,
+      "latitude": 43.2961743,
+      "longitude": 5.3699525,
+      "formateur_status": {},
+      "nonAssignableFormateurs": [
+        25
+      ]
+    },
+    {
+      "id": 239,
+      "theme_id": 2,
+      "secondary_theme_id": null,
+      "date_debut": "06/02/2025",
+      "date_fin": "06/02/2025",
+      "ville": "Lille",
+      "choix": "Demande en attente",
+      "methode": "présentiel",
+      "remarque": "",
+      "formateur_ids": [
+        25
+      ],
+      "num_s": 214,
+      "latitude": 50.6365654,
+      "longitude": 3.0635282,
+      "formateur_status": {
+        "25": "pending-cancel"
+      }
+    }
+  ]
+}

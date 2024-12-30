@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choix d'Indisponibilité</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="shortcut icon" href="ffavicon.png" type="image/x-icon">
+    <style>
+        body {
+            padding: 0;
+        }
+
+        #notification-icon {
+            display: none;
+        }
+
+        .container {
+            max-width: 800px;
+        }
+
+        .list-group-item {
+            margin-bottom: 10px;
+        }
+
+        .form-group input {
+            width: 100%;
+        }
+        
+
+        .btn-primary {
+            color: #fff;
+            background-color: #ec5b15;
+            border-color:     #ec5b15;
+        }
+        .btn-primary:hover {
+            color: #fff;
+            background-color: #bb470d;
+            border-color:     #bb470d;
+        }
+        .btn-primary:active {
+            color: #fff;
+            background-color: #ec5b15 !important;
+            border-color:     #ec5b15 !important;
+        }
+
+        .form-control:focus {
+            color: #495057;
+            background-color: #fff;
+            border-color: #ec5b15;
+            outline: 0;
+            box-shadow: 0 0 0 .2rem #ec5b15;
+        }
+
+
+        h1 {
+            font-size: 30px;
+        }
+
+        /* Style pour le texte "Bonjour prenom nom" */
+        .welcome-message {
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        @media (max-width:455px) {
+            h1, .mt-5 {
+                font-size: 22px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div id="menu-overlay"></div> <!-- Voile -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <a class="navbar-brand" href="#"><img src="logo_orion-web.png" alt="Logo Orion"></a>
+        <button st class="navbar-toggler" type="button" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="side-menu" class="navbar-collapse">
+            <!-- Button "X" for closing the menu in responsive mode -->
+            <span id="close-menu">&times;</span>
+            <ul id="manav" class="navbar-nav ml-auto" style="margin-top: 0;">
+                <li class="nav-item">
+                    <a class="nav-link" href="accueil_formateur.html">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="choix.html">Gérer mes disponibilités</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="infos.html">Mes coordonnées</a>
+                </li>
+                <li class="nav-item">
+                    <!-- Bouton de déconnexion -->
+                    <a class="nav-link logout-link" href="#" id="logout-button" style="color: #ec5b15;">Déconnexion</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Texte "Bonjour prenom nom" -->
+    <div class="container">
+        <p class="welcome-message" id="formateur-name"></p> <!-- Le nom du formateur s'affichera ici -->
+    </div>
+
+    <div class="container">
+        <h1>Déclarer des Indisponibilités</h1>
+        <form id="indisponibilite-form">
+            <div class="form-group">
+                <label for="date-debut">Date de Début</label>
+                <input type="text" class="form-control datepicker" id="date-debut" required>
+            </div>
+            <div class="form-group">
+                <label for="date-fin">Date de Fin</label>
+                <input type="text" class="form-control datepicker" id="date-fin" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </form>
+        <h2 class="mt-5">Mes Indisponibilités</h2>
+        <ul id="indisponibilites-list" class="list-group">
+            <!-- Les indisponibilités seront ajoutées ici par JavaScript -->
+        </ul>
+    </div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="choix.js"></script>
+</body>
+</html>

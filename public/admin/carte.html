@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carte des Formateurs</title>
+    <!-- Inclure la bibliothèque jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Inclure la bibliothèque Leaflet pour la carte -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <style>
+        #map {
+            height: 600px; /* Ajustez la hauteur selon vos besoins */
+            width: 100%;   /* La carte prendra toute la largeur de l'élément parent */
+        }
+
+        #formateurs-list {
+            margin: 20px;
+        }
+
+        .formateur-item {
+            cursor: pointer;
+            padding: 5px;
+            background-color: #f0f0f0;
+            margin-bottom: 5px;
+            border-radius: 5px;
+        }
+
+        .formateur-item:hover {
+            background-color: #ec5b15;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Liste des Formateurs</h1>
+    <div id="formateurs-list">
+        <!-- La liste des formateurs sera ajoutée dynamiquement ici -->
+    </div>
+
+    <div id="map"></div> <!-- L'élément où la carte sera affichée -->
+    <script src="carte.js"></script>
+</body>
+</html>

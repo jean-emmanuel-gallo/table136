@@ -1,0 +1,53 @@
+{
+  "formateurs": [
+    {
+      "id": 26,
+      "nom": "Goe",
+      "prenom": "Johnnn",
+      "ville": "Lyon",
+      "CP": "69006",
+      "téléphone": "00000000",
+      "mail": "jean-emmanuel.gallo@laplateforme.io",
+      "adresse": "6 rue Ney",
+      "themes": [
+        4
+      ],
+      "password": "aaa",
+      "indisponibilites": [],
+      "latitude": 45.7713437,
+      "longitude": 4.8548014,
+      "cp": "69006"
+    },
+    {
+      "id": 25,
+      "nom": "Duduuuuuuu",
+      "prenom": "prenom",
+      "CP": "13006",
+      "ville": "Marseille",
+      "latitude": 43.2949213,
+      "longitude": 5.384702,
+      "themes": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        13,
+        15,
+        31,
+        53,
+        62,
+        67,
+        69
+      ],
+      "téléphone": "008484ehgerg50000012",
+      "mail": "je.gallo@orionsante.fr",
+      "adresse": "15 Rue des Trois mages",
+      "password": "aaa",
+      "indisponibilites": [],
+      "cp": "13006"
+    }
+  ]
+}

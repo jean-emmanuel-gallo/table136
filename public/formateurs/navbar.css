@@ -1,0 +1,190 @@
+/* Styles de la navbar */
+.navbar-custom {
+    background-color: white;
+    border-bottom: 1px solid #EC5B15;
+    padding: 0;
+}
+
+.navbar-custom .navbar-nav .nav-link {
+    color: black;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    padding: 13px;
+}
+
+.navbar-custom .navbar-nav {
+    margin-left: auto;
+}
+
+
+.nav-link:hover {
+    background-color: #EC5B15;
+    color: white !important;
+    transition: 0.6s;
+}
+
+.nav-link {
+    transition: 0.6s;
+    padding: 13px;
+}
+
+
+.navbar-custom .navbar-nav .nav-item:last-child {
+    margin-right: 0;
+}
+
+.navbar-custom .navbar-brand img {
+    height: 40px;
+}
+
+.navbar-toggler {
+    border-color: transparent;
+    cursor: pointer;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(236, 91, 21, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* Bouton "Déconnexion" */
+.logout-link {
+    color: #ec5b15;
+    text-decoration: underline;
+    font-weight: bold;
+    display: block;
+}
+
+/* Responsive menu */
+#menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(236, 91, 21, 0.8); /* Voile coloré */
+    display: none;
+    z-index: 10;
+}
+
+#side-menu {
+    position: fixed;
+    top: 0;
+    right: -300px; /* Menu caché */
+    width: 250px;
+    height: 100%;
+    background-color: white;
+    transition: right 0.3s ease;
+    z-index: 20;
+    padding-top: 20px;
+}
+
+
+#side-menu.open {
+    right: 0;
+}
+
+/* "X" button to close the menu */
+#close-menu {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 30px;
+    color: #EC5B15;
+    cursor: pointer;
+    display: none;
+}
+
+/* Afficher le bouton "X" uniquement quand le menu est ouvert */
+#side-menu.open #close-menu {
+    display: block;
+}
+
+/* Transformer l'icône du burger en "X" */
+.navbar-toggler.open .navbar-toggler-icon {
+    background-image: none;
+    position: relative;
+}
+
+.navbar-toggler.open .navbar-toggler-icon:before,
+.navbar-toggler.open .navbar-toggler-icon:after {
+    content: "";
+    position: absolute;
+    width: 22px;
+    height: 2px;
+    background-color: black;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.navbar-toggler.open .navbar-toggler-icon:after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* Affichage normal de la navbar en mode desktop */
+@media (min-width: 992px) {
+    #side-menu {
+        position: static;
+        right: 0;
+        width: auto;
+        height: auto;
+        display: flex !important; /* Use flex to align items horizontally */
+        background-color: transparent;
+        box-shadow: none;
+        padding-top: 0;
+        text-align-last: left;
+    }
+
+    #menu-overlay {
+        display: none !important;
+    }
+
+    #close-menu {
+        display: none !important;
+    }
+
+    .navbar-toggler {
+        display: none;
+    }
+
+    .ml-auto {
+        margin-left: auto;
+        margin-top: 55px;
+    }
+    .nav-link {
+        margin-top: 0 ;
+        text-align-last: left;
+       }
+
+}
+
+@media (max-width: 769px) {
+
+    .navbar-custom .navbar-nav .nav-link {
+        color: black;
+        font-size: 16px;
+        font-weight: 500;
+        text-align: center;
+        padding: 13px;
+        margin-top: 0;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+
+    
+    .nav-link:nth-of-type(1) {
+        margin-top: 15px ;
+        text-align-last: left;
+       }
+
+       .nav-item:nth-of-type(1) {
+        padding-top: 55px;
+        color: red;
+       }
+
+    .nav-link:hover {
+        background-color: #EC5B15;
+        color: white !important;
+    }
+}

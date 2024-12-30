@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter des Formateurs et Assigner des Thèmes</title>
+    <link rel="icon" type="image/x-icon" href="../favicon.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- Ajouter jsPDF et le plugin autoTable -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../pages.css">
+    <style>
+        header {
+            background-color: #ec5b15;
+        }
+        #logo_brand {
+            height: 66px;
+            width: auto;
+        }
+        #navlist {
+            list-style: none;
+            display: flex;
+            margin-top: 1%;
+            margin-left: 1%;
+        }
+        #navlist li a {
+            color: white;
+        }
+        .formateur-item {
+            padding: 10px;
+            margin-bottom: 5px;
+            list-style-type: none;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            text-align: center;
+            width: 800px;
+        }
+
+                /* Bouton pour afficher la carte */
+                .map-btn {
+            background-color: #ec5b15;
+            border: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+        }
+
+        .map-btn img {
+            width: 30px;
+            height: 30px;
+        }
+
+        /* Styles pour le modal de la carte */
+        .map-modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+        }
+
+        .map-content-container {
+            margin: auto;
+            display: block;
+            width: 80%;
+            height: 80%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .map-content {
+            width: 100%;
+            height: auto;
+            transition: transform 0.25s ease;
+            cursor: zoom-in;
+        }
+
+        .map-content.zoomed {
+            cursor: zoom-out;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #ec5b15;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            z-index: 1002;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        /* Style pour les boutons déroulants */
+        .btn-collapse {
+            background-color: #EC5B15;
+            color: white;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        /* Style pour le module de recherche et les boutons alphabet */
+        #alphabet-filter {
+            margin-bottom: 10px;
+        }
+        .alphabet-btn, .filter-btn {
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        .btn-success {
+            color: #fff;
+            background-color: #ec5b15;
+            border-color: #ec5b15;
+        }
+
+        .btn-success:hover {
+            color: #fff;
+            background-color: #ec5b15;
+            border-color: #ec5b15;
+        }
+
+        .btn-success:active {
+            color: #fff;
+            background-color: #ec5b15 !important;
+            border-color: #ec5b15 !important;
+        }
+        .btn-success.focus, .btn-success:focus {
+            box-shadow: 0 0 0 .2rem rgba(255, 118, 38, 0.5) !important;
+        }
+
+
+        .btn-success:not(:disabled):not(.disabled).active, .btn-success:not(:disabled):not(.disabled):active, .show>.btn-success.dropdown-toggle {
+        color: #fff;
+        background-color: #ec5b15;
+        border-color: #ec5b15;
+    }
+
+    #coordonnees-filters {
+        margin-top: 2%;
+    }
+
+    #openAddFormateurModal {
+            color: #fff;
+            background-color: #ec5b15;
+            border-color: #ec5b15;
+            margin-bottom: 0 !important;
+        }
+
+        #openAddFormateurModal:hover {
+            color: #fff;
+            background-color: #ec5b15;
+            border-color: #ec5b15;
+        }
+
+        #openAddFormateurModal:active {
+            color: #fff;
+            background-color: #ec5b15 !important;
+            border-color: #ec5b15 !important;
+        }
+        #openAddFormateurModal.focus, #openAddFormateurModal:focus {
+            box-shadow: 0 0 0 .2rem rgba(255, 118, 38, 0.5) !important;
+        }
+
+        .custom-dialog {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ec5b15;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 9999;
+}
+
+.dialog-content {
+    text-align: center;
+}
+
+.dialog-content button {
+    margin-top: 10px;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <img id="logo_brand" src="../logo_orion-web_white.png" alt="">
+            <ul id="navlist">
+                <li><a href="../acc_admin.html">Gestion Session</a></li>
+                <li><a href="../t_archive.html">Formations archivées</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Formateurs <span id="formateurs-badge" class="badge badge-warning" style="display: none;">0</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="../logforma.html">Logs des formateurs</a>
+                        <a class="dropdown-item" href="addform.html">
+                            Ajout formateur <span id="ajout-formateur-badge" class="badge badge-warning" style="display: none;">0</span>
+                        </a>
+                        <a class="dropdown-item" href="../forgot_password.html">Mots de passe oubliés</a>
+                    </div>
+                </li>
+                
+                <li><a href="../themeformateurs/themeforma.html">Thèmes et assignations</a></li>
+                <li><a href="../logadmin.html">Logs de Véronique</a></li>
+                <li><a href="#" id="logout-btn">Déconnexion</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Ajouter des Formateurs et Assigner des Thèmes</h1>
+
+        <!-- Bouton pour ouvrir le modal d'ajout de formateur -->
+        <button type="button" class="btn btn-primary mb-4" id="openAddFormateurModal">Ajouter Formateur</button>
+        <!-- Bouton pour la liste des formateurs -->
+            <button class="btn btn-success dropdown-toggle" type="button" id="downloadFormateursDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Télécharger les Formateurs
+            </button>
+            <div class="dropdown-menu" aria-labelledby="downloadFormateursDropdown">
+                <a class="dropdown-item" href="#" id="downloadFormateursPDF">Télécharger en PDF</a>
+                <a class="dropdown-item" href="#" id="downloadFormateursExcel">Télécharger en Excel</a>
+                <a class="dropdown-item" href="#" id="downloadFormateursJSON">Télécharger en JSON</a>
+            </div>
+
+        
+        <!-- Filtres pour coordonnées manquantes -->
+        <div class="row" id="coordonnees-filters" style="margin-bottom: 20px;">
+            <button class="btn btn-warning filter-btn" id="filter-missing-email">Sans Email</button>
+            <button class="btn btn-warning filter-btn" id="filter-missing-telephone">Sans Téléphone</button>
+            <button class="btn btn-warning filter-btn" id="filter-missing-adresse">Sans Adresse</button>
+            <button class="btn btn-warning filter-btn" id="filter-missing-cp">Sans Code Postal</button>
+            <button class="btn btn-warning filter-btn" id="filter-missing-password">Sans Mot de Passe</button>
+        </div>
+
+        <!-- Module de recherche -->
+        <div class="row">
+            <div class="col-md-6">
+                <input type="text" id="search-formateur" class="form-control" placeholder="Rechercher un formateur">
+            </div>
+        </div>
+        <!-- Boutons de filtre par alphabet -->
+        <div id="alphabet-filter" class="row" style="margin-top: 25px;">
+            <button class="btn btn-secondary alphabet-btn" data-letter="all" style="background-color: #EC5B15;">Tous</button>
+            <button class="btn btn-secondary alphabet-btn" data-letter="A" style="background-color: #EC5B15;">A</button>
+            <button class="btn btn-secondary alphabet-btn" data-letter="B" style="background-color: #EC5B15;">B</button>
+            <button class="btn btn-secondary alphabet-btn" data-letter="C" style="background-color: #EC5B15;">C</button>
+            <button class="btn btn-secondary alphabet-btn" data-letter="D" style="background-color: #EC5B15;">D</button>
+            <button class="btn btn-secondary alphabet-btn" data-letter="E" style="background-color: #EC5B15;">E</button>
+            <button class="btn btn-secondary alphabet-btn" data-letter="F" style="background-color: #EC5B15;">F</button>
+            <button class="btn btn-secondary alphabet-btn" data-letter="G" style="background-color: #EC5B15;">G</button>
+            <button class="btn btn-secondary alphabet-btn" data-letter="H" style="background-color: #EC5B15;">H</button>
+            <button class="btn btn-secondary alphabet-btn" data-letter="I" style="background-color: #EC5B15;">I</button>
+            <button class="btn btn-secondary alphabet-btn" data-letter="J" style="background-color: #EC5B15;">J</button>
+            <button class="btn btn-secondary alphabet-btn" data-letter="K" style="background-color: #EC5B15;">K</button>
+            <button class="btn btn-secondary alphabet-btn" data-letter="L" style="background-color: #EC5B15;">L</button>
+            <button class="btn btn-secondary alphabet-btn" data-letter="M" style="background-color: #EC5B15;">M</button>
+            <button class="btn btn-secondary alphabet-btn" data-letter="N" style="background-color: #EC5B15;">N</button>
+            <button class="btn btn-secondary alphabet-btn" data-letter="O" style="background-color: #EC5B15;">O</button>
+            <button class="btn btn-secondary alphabet-btn" data-letter="P" style="background-color: #EC5B15;">P</button>
+            <button class="btn btn-secondary alphabet-btn" data-letter="Q" style="background-color: #EC5B15;">Q</button>
+            <button class="btn btn-secondary alphabet-btn" data-letter="R" style="background-color: #EC5B15;">R</button>
+            <button class="btn btn-secondary alphabet-btn" data-letter="S" style="background-color: #EC5B15;">S</button>
+            <button class="btn btn-secondary alphabet-btn" data-letter="T" style="background-color: #EC5B15;">T</button>
+            <button class="btn btn-secondary alphabet-btn" data-letter="U" style="background-color: #EC5B15;">U</button>
+            <button class="btn btn-secondary alphabet-btn" data-letter="V" style="background-color: #EC5B15;">V</button>
+            <button class="btn btn-secondary alphabet-btn" data-letter="W" style="background-color: #EC5B15;">W</button>
+            <button class="btn btn-secondary alphabet-btn" data-letter="X" style="background-color: #EC5B15;">X</button>
+            <button class="btn btn-secondary alphabet-btn" data-letter="Y" style="background-color: #EC5B15;">Y</button>
+            <button class="btn btn-secondary alphabet-btn" data-letter="Z" style="background-color: #EC5B15;">Z</button>
+        </div>
+
+        <!-- Liste des formateurs -->
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Liste des Formateurs</h3>
+                <ul id="formateurs-list"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal pour ajouter un formateur -->
+    <div class="modal fade" id="addFormateurModal" tabindex="-1" role="dialog" aria-labelledby="addFormateurModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addFormateurModalLabel">Ajouter Formateur</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="add-formateur-form">
+                        <div class="form-group">
+                            <label for="nom">Nom:</label>
+                            <input type="text" class="form-control" id="nom">
+                        </div>
+                        <div class="form-group">
+                            <label for="prenom">Prénom:</label>
+                            <input type="text" class="form-control" id="prenom" >
+                        </div>
+                        <div class="form-group">
+                            <label for="ville">Ville:</label>
+                            <input type="text" class="form-control" id="ville" >
+                        </div>
+                        <div class="form-group">
+                            <label for="cp">Code Postal:</label>
+                            <input type="text" class="form-control" id="cp" >
+                        </div>
+                        <div class="form-group">
+                            <label for="telephone">Téléphone:</label>
+                            <input type="text" class="form-control" id="telephone" >
+                        </div>
+                        <div class="form-group">
+                            <label for="mail">Mail:</label>
+                            <input type="email" class="form-control" id="mail" >
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Mot de passe:</label>
+                            <input type="text" class="form-control" id="password" readonly>
+                            <button type="button" class="btn btn-secondary" id="generatePasswordBtn">Générer un mot de passe</button>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="adresse">Adresse:</label>
+                            <input type="text" class="form-control" id="adresse" >
+                        </div>
+                        <div class="form-group">
+                            <label for="themes">Thèmes (sélectionner multiples):</label>
+                            <select multiple class="form-control" id="themes"></select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Ajouter Formateur</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal pour modifier un formateur -->
+<!-- Modal pour modifier un formateur -->
+<div class="modal fade" id="editFormateurModal" tabindex="-1" role="dialog" aria-labelledby="editFormateurModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editFormateurModalLabel">Modifier Formateur</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+                <!-- Bouton pour éditer la fiche du formateur -->
+                <button id="print-formateur-btn" class="btn btn-secondary" style="margin-top: 10px;">
+                    Éditer la fiche du formateur
+                </button>
+            <div class="modal-body">
+                <!-- Zone pour afficher le nom du formateur sélectionné -->
+                <h4 id="formateur-nom-display" style="text-align: center; margin-bottom: 20px;"></h4>
+
+                <!-- Coordonnées Collapse -->
+                <button class="btn btn-collapse btn-block" type="button" data-toggle="collapse" data-target="#coordonneesCollapse" aria-expanded="false" aria-controls="coordonneesCollapse">
+                    Coordonnées
+                </button>
+                <div class="collapse show" id="coordonneesCollapse">
+                    <div class="form-group">
+                        <label for="edit-nom">Nom:</label>
+                        <input type="text" class="form-control" id="edit-nom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-prenom">Prénom:</label>
+                        <input type="text" class="form-control" id="edit-prenom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-ville">Ville:</label>
+                        <input type="text" class="form-control" id="edit-ville" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-cp">Code Postal:</label>
+                        <input type="text" class="form-control" id="edit-cp" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-telephone">Téléphone:</label>
+                        <input type="text" class="form-control" id="edit-telephone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-mail">Mail:</label>
+                        <input type="email" class="form-control" id="edit-mail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-password">Mot de passe:</label>
+                        <input type="text" class="form-control" id="edit-password" readonly>
+                        <button type="button" class="btn btn-secondary" id="edit-generatePasswordBtn">Générer un nouveau mot de passe</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-adresse">Adresse:</label>
+                        <input type="text" class="form-control" id="edit-adresse" required>
+                    </div>
+                </div>
+
+                <!-- Thèmes Collapse -->
+                <button class="btn btn-collapse btn-block" type="button" data-toggle="collapse" data-target="#themesCollapse" aria-expanded="false" aria-controls="themesCollapse">
+                    Thèmes
+                </button>
+                <div class="collapse" id="themesCollapse">
+                    <div class="form-group">
+                        <label for="edit-themes">Thèmes (sélectionner multiples):</label>
+                        <select multiple class="form-control" id="edit-themes"></select>
+                    </div>
+                </div>
+
+                <!-- Indisponibilités Collapse -->
+                <button class="btn btn-collapse btn-block" type="button" data-toggle="collapse" data-target="#indisponibilitesCollapse" aria-expanded="false" aria-controls="indisponibilitesCollapse">
+                    Indisponibilités
+                </button>
+                <div class="collapse" id="indisponibilitesCollapse">
+                    <ul id="indisponibilites-list" class="list-group"></ul>
+                </div>
+
+                <!-- Bouton pour sauvegarder les modifications -->
+                <button type="submit" class="btn btn-primary" id="save-formateur" style="background-color: #EC5B15; border: none;">Sauvegarder</button>
+
+                <!-- Bouton pour supprimer le formateur -->
+                <button type="button" class="btn btn-danger" id="delete-formateur" style="margin-top: 10px;">Supprimer Formateur</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        <!-- Bouton pour afficher la carte -->
+        <button id="show-map-btn" class="map-btn">
+            <img src="../bmap.svg" alt="Carte" />
+        </button>
+    
+        <!-- Conteneur pour la carte -->
+        <div id="map-modal" class="map-modal">
+            <span class="close-btn">&times;</span>
+            <img src="../map_form.jpg" alt="Carte Formations" class="map-content">
+        </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type="module" src="../map.js"></script>
+    <script src="../admin-notifications.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="addFormateur.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    const formateursBadge = document.getElementById("formateurs-badge");
+    const ajoutFormateurBadge = document.getElementById("ajout-formateur-badge");
+
+    // Fonction pour mettre à jour les badges
+    function updateNavBarBadges() {
+        fetch('/database/notifications.json')
+            .then(response => response.json())
+            .then(data => {
+                if (data.notifications && Array.isArray(data.notifications)) {
+                    const notificationsCount = data.notifications.length;
+
+                    // Met à jour le badge de "Formateurs"
+                    if (notificationsCount > 0) {
+                        formateursBadge.style.display = "inline-block";
+                        formateursBadge.textContent = notificationsCount;
+                    } else {
+                        formateursBadge.style.display = "none";
+                    }
+
+                    // Filtre uniquement les notifications liées aux ajouts de formateurs
+                    const ajoutFormateursCount = data.notifications.filter(
+                        notification => notification.type === "update_formateur"
+                    ).length;
+
+                    // Met à jour le badge de "Ajout formateur"
+                    if (ajoutFormateursCount > 0) {
+                        ajoutFormateurBadge.style.display = "inline-block";
+                        ajoutFormateurBadge.textContent = ajoutFormateursCount;
+                    } else {
+                        ajoutFormateurBadge.style.display = "none";
+                    }
+                }
+            })
+            .catch(error => {
+                console.error("Erreur lors de la récupération des notifications :", error);
+            });
+    }
+
+    // Appelle la fonction au chargement
+    updateNavBarBadges();
+
+    // Met à jour les badges en temps réel via Socket.IO
+    const socket = io();
+    socket.on("formateurUpdate", () => {
+        updateNavBarBadges(); // Recharge les badges quand il y a une mise à jour
+    });
+});
+    </script>
+</body>
+</html>

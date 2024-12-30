@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil Formateur</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="shortcut icon" href="ffavicon.png" type="image/x-icon">
+    <style>
+        /* Styles des boutons d'action */
+        .accepted {
+            background-color: green !important;
+            color: white;
+            cursor: not-allowed;
+        }
+
+        .refused {
+            background-color: red !important;
+            color: white;
+            cursor: not-allowed;
+        }
+
+        .pending-cancel {
+            background-color: orange !important;
+            color: black;
+            cursor: not-allowed;
+        }
+
+        .actions-cell button {
+            margin-right: 5px;
+        }
+
+        .actions-cell .accepted,
+        .actions-cell .refused {
+            display: none;
+        }
+
+
+        #notification-icon {
+            display: none;
+        }
+
+        /* Table responsive styles */
+        .table-responsive {
+            width: 100%;
+        }
+
+        .table-striped {
+            width: 100%;
+        }
+
+        .badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        .dropdown-menu {
+            width: 300px;
+        }
+
+        .dropdown-item {
+            white-space: normal;
+        }
+        
+
+        /* Styles pour la responsivité des tableaux sur les petits écrans */
+        @media (max-width: 768px) {
+
+
+
+            .table thead {
+                display: none;
+            }
+
+            .table,
+            .table tbody,
+            .table tr,
+            .table td {
+                display: block;
+                width: 100%;
+            }
+
+            .table tr {
+                margin-bottom: 15px;
+            }
+
+            .table td {
+                  text-align: right;
+                  position: relative;
+                  border: none;
+                  border-bottom-width: medium;
+                  border-bottom-style: none;
+                  border-bottom-color: currentcolor;
+                  border-bottom: 1px solid #ddd;
+                  display: flex;
+            }
+
+            .table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 15px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                text-align: left;
+                font-weight: bold;
+            }
+
+            .dropdown-header {
+    display: block;
+    padding: 0.5rem 0.5rem;
+    margin-bottom: 0;
+    font-size: .875rem;
+    color: #6c757d;
+    white-space: nowrap;
+}
+
+
+.mt-2 {
+    font-size: 22px;
+}
+        }
+
+
+        
+    </style>
+</head>
+<body>
+    <div id="menu-overlay"></div> <!-- Voile -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <a class="navbar-brand" href="#"><img src="logo_orion-web.png" alt="Logo Orion"></a>
+        <button st class="navbar-toggler" type="button" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="side-menu" class="navbar-collapse">
+            <!-- Button "X" for closing the menu in responsive mode -->
+            <span id="close-menu">&times;</span>
+            <ul id="manav" class="navbar-nav ml-auto" style="margin-top: 0;">
+                <li class="nav-item">
+                    <a class="nav-link" href="accueil_formateur.html">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="choix.html">Gérer mes disponibilités</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="infos.html">Mes coordonnées</a>
+                </li>
+                <li class="nav-item">
+                    <!-- Bouton de déconnexion -->
+                    <a class="nav-link logout-link" href="#" id="logout-button" style="color: #ec5b15;">Déconnexion</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <main>
+    <section id="monTableau">
+        <div class="container">
+            <div class="d-flex justify-content-end mt-2">
+                <div class="dropdown">
+                    <a class="nav-link" href="#" id="notification-icon" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-bell" style="color: #ec5b15;"></i>
+                        <span class="badge badge-danger" id="notification-badge" style="display: none;"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notification-icon">
+                        <h6 class="dropdown-header">Vous devez accepter/refuser ces formations :</h6>
+                        <div id="notifications-list">
+                            <!-- Notifications seront ajoutées ici dynamiquement -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h1 class="mt-2">Événements assignés</h1>
+            
+            <div class="modal fade" id="relatedEventsModal" tabindex="-1" role="dialog" aria-labelledby="relatedEventsModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="relatedEventsModalLabel">Événements liés</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Contenu généré dynamiquement -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                            <button type="button" class="btn btn-primary" id="confirmRelatedAccept">Accepter</button>
+                            <button type="button" class="btn btn-danger" id="confirmRelatedRefuse">Refuser</button>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+<!-- Modal pour gérer l'annulation des événements liés -->
+<!-- <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cancelModalLabel">Confirmation d'annulation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Voulez-vous annuler cet événement ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Non</button>
+                <button type="button" class="btn btn-primary" id="confirmCancelBtn">Oui</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+Modal de confirmation standard pour un seul événement -->
+<!-- <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cancelModalLabel">Confirmation d'annulation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Voulez-vous annuler cet événement ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Non</button>
+                <button type="button" class="btn btn-primary" id="confirmCancelBtn">Oui</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+            
+
+            <!-- Dropdown pour filtrer les événements -->
+            <div class="mb-3">
+                <select id="event-filter" class="form-control">
+                    <option value="all">Tous les événements</option>
+                    <option value="accepted">Événements acceptés</option>
+                    <option value="refused">Événements refusés</option>
+                    <option value="pending-cancel">En attente d'annulation</option>
+                    <option value="pending">Événements en attente</option> <!-- Ajouté -->
+                    <option value="past">Événements passés</option>
+                </select>
+            </div>
+            
+
+            <div class="table-responsive">
+                <table class="table table-striped mt-3" id="events-table">
+                    <thead>
+                        <tr class="bg-info">
+                            <th>Thème</th>
+                            <th>Date de début</th>
+                            <th>Date de fin</th>
+                            <th>Ville</th>
+                            <th>Méthode</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Les événements seront ajoutés ici par JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de confirmation d'annulation -->
+    <!-- <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cancelModalLabel">Confirmation d'annulation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Voulez-vous annuler cette formation ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Non</button>
+                    <button type="button" class="btn btn-primary" id="confirmCancelBtn">Oui</button>
+                </div>
+            </div>
+        </div>
+    </div> -->
+</main>
+
+
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="accueil_formateur.js" defer></script>
+</body>
+</html>

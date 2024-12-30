@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Événements Archivés</title>
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="pages.css">
+    <link rel="stylesheet" href="main.css">
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <!-- Bootstrap JS et dépendances -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <!-- Additional CSS -->
+        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .table-container {
+            margin: 20px;
+        }
+
+                /* Bouton pour afficher la carte */
+                .map-btn {
+            background-color: #ec5b15;
+            border: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+        }
+
+        .map-btn img {
+            width: 30px;
+            height: 30px;
+        }
+
+        /* Styles pour le modal de la carte */
+        .map-modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+        }
+
+        .map-content-container {
+            margin: auto;
+            display: block;
+            width: 80%;
+            height: 80%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .map-content {
+            width: 100%;
+            height: auto;
+            transition: transform 0.25s ease;
+            cursor: zoom-in;
+        }
+
+        .map-content.zoomed {
+            cursor: zoom-out;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #ec5b15;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            z-index: 1002;
+        }
+
+        #logo_brand {
+    height: 66px;
+    width: auto;
+}
+        .close-btn:hover,
+        .close-btn:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <img id="logo_brand" src="logo_orion-web_white.png" alt="">
+            <ul id="navlist">
+                <li><a href="acc_admin.html">Gestion Session</a></li>
+                <li><a href="t_archive.html">Formations archivées</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Formateurs <span id="formateurs-badge" class="badge badge-warning" style="display: none;">0</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="logforma.html">Logs des formateurs</a>
+                        <a class="dropdown-item" href="addformateur/addform.html">
+                            Ajout formateur <span id="ajout-formateur-badge" class="badge badge-warning" style="display: none;">0</span>
+                        </a>
+                        <a class="dropdown-item" href="forgot_password.html">Mots de passe oubliés</a>
+                    </div>
+                </li>
+                <li><a href="themeformateurs/themeforma.html">Thèmes et assignations</a></li>
+                <li><a href="logadmin.html">Logs de Véronique</a></li>
+                <li><a href="#" id="logout-btn">Déconnexion</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="table-container">
+        <h1>Formations archivées</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Thème</th>
+                    <th>Date de Début</th>
+                    <th>Date de Fin</th>
+                    <th>Ville</th>
+                    <th>Hôtel</th>
+                    <th>Financement</th>
+                    <th>Méthode</th>
+                    <th>Formateur(s)</th>
+                    <th>Choix</th>
+                    <th>Session</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="archived-events-table">
+                <!-- Les événements archivés seront insérés ici -->
+            </tbody>
+        </table>
+    </div>
+
+        <!-- Bouton pour afficher la carte -->
+        <button id="show-map-btn" class="map-btn">
+            <img src="bmap.svg" alt="Carte" />
+        </button>
+    
+        <!-- Conteneur pour la carte -->
+        <div id="map-modal" class="map-modal">
+            <span class="close-btn">&times;</span>
+            <img src="map_form.jpg" alt="Carte Formations" class="map-content">
+        </div>
+        <script type="module" src="map.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="t_archive.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        // Initialisation de Socket.IO
+        const socket = io();
+        
+        // Fonction pour afficher le pop-up
+        function showPopup(message, link) {
+            const popup = document.createElement('div');
+            popup.style.backgroundColor = '#ec5b15';
+            popup.style.color = '#fff';
+            popup.style.padding = '10px 15px';
+            popup.style.marginTop = '10px';
+            popup.style.borderRadius = '5px';
+            popup.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+            popup.style.cursor = 'pointer';
+            popup.style.transition = 'opacity 0.5s ease-in-out';
+            popup.style.position = 'fixed';
+            popup.style.bottom = '20px';
+            popup.style.right = '20px';
+            popup.innerHTML = message;
+        
+            // Redirection sur clic
+            popup.onclick = () => {
+                window.location.href = link;
+            };
+        
+            // Ajouter le pop-up au conteneur
+            document.body.appendChild(popup);
+        
+            // Supprimer le pop-up après 5 secondes
+            setTimeout(() => {
+                popup.style.opacity = '0';
+                setTimeout(() => {
+                    popup.remove();
+                }, 500);
+            }, 5000);
+        }
+        
+        // Écoute des événements de modification des coordonnées
+        socket.on('formateurUpdate', (data) => {
+            console.log('Notification reçue côté admin :', data); // Vérifiez si le client reçoit les données
+            if (data && data.message) {
+                showPopup(data.message, '/admin/addformateur/addform.html');
+            }
+        });
+           
+        document.addEventListener("DOMContentLoaded", () => {
+            const formateursBadge = document.getElementById("formateurs-badge");
+            const ajoutFormateurBadge = document.getElementById("ajout-formateur-badge");
+        
+            // Fonction pour mettre à jour les badges
+            function updateNavBarBadges() {
+                fetch('/database/notifications.json')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.notifications && Array.isArray(data.notifications)) {
+                            const notificationsCount = data.notifications.length;
+        
+                            // Met à jour le badge de "Formateurs"
+                            if (notificationsCount > 0) {
+                                formateursBadge.style.display = "inline-block";
+                                formateursBadge.textContent = notificationsCount;
+                            } else {
+                                formateursBadge.style.display = "none";
+                            }
+        
+                            // Filtre uniquement les notifications liées aux ajouts de formateurs
+                            const ajoutFormateursCount = data.notifications.filter(
+                                notification => notification.type === "update_formateur"
+                            ).length;
+        
+                            // Met à jour le badge de "Ajout formateur"
+                            if (ajoutFormateursCount > 0) {
+                                ajoutFormateurBadge.style.display = "inline-block";
+                                ajoutFormateurBadge.textContent = ajoutFormateursCount;
+                            } else {
+                                ajoutFormateurBadge.style.display = "none";
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Erreur lors de la récupération des notifications :", error);
+                    });
+            }
+        
+            // Appelle la fonction au chargement
+            updateNavBarBadges();
+        
+            // Met à jour les badges en temps réel via Socket.IO
+            const socket = io();
+            socket.on("formateurUpdate", () => {
+                updateNavBarBadges(); // Recharge les badges quand il y a une mise à jour
+            });
+        });
+        
+           </script>
+</body>
+</html>
